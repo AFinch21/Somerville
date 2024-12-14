@@ -1,26 +1,33 @@
-from database.ORM import Agent, AgentPrompts, UserRequest
-from model.Model import Prompt, BaseAgent
+from database.ORM import Agent, AgentPrompts, ResponseModel, ConvFinQAData
+from model.Model import Prompt, BaseAgent, ConvFinQADataQuestion
 from sqlalchemy import select
+from sqlalchemy.orm import sessionmaker, declarative_base
+from model.Model import ConvFinQADataSchema
+import json
 
-def get_question_data(engine):
-    
-    # stmt = select(Agent)
+Base = declarative_base()
 
-    # agents = []
+def get_question_data(engine, question):
     
-    # with engine.connect() as conn:
-    #     for row in conn.execute(stmt):
-            
-    #         agent = BaseAgent(
-    #             agent_id = row[0],
-    #             agent_name= row[1],
-    #             api_key= row[2],
-    #         )
-            
-    #         agents.append(agent)
+    stmt = select(ConvFinQAData).where(ConvFinQAData.question == question)
+
     
-    # return agents
-    pass
+    
+    with engine.connect() as conn:
+        for row in conn.execute(stmt):
+            question = ConvFinQADataQuestion(
+                id = row[0],
+                company= row[1],
+                year=row[2],
+                filename= row[3],
+                pre_tex=row[4],
+                post_text= row[5],
+                table_ori= row[6],
+                question=row[7],
+            )
+    
+    return question
+    
 
 def get_evaluation_stats(engine, agent_id):
     # stmt = select(AgentPrompts).where(AgentPrompts.agent_id == agent_id)
@@ -37,6 +44,49 @@ def get_evaluation_stats(engine, agent_id):
     
     # return prompt
     pass
+
+def upload_input_data(engine, json_file_path):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    try:
+        Base.metadata.create_all(engine)
+        
+        with open(json_file_path, 'r') as file:
+            records = json.load(file)
+        
+        data_objects = []
+        
+        for row in records:
+            
+            existing_record = session.query(ConvFinQAData).filter_by(id=records[row]['id']).first()
+            
+            if not existing_record:
+                data_object = ConvFinQAData(
+                    id=records[row]['id'],
+                    company=str(records[row]['company']),
+                    year=str(records[row]['year']),
+                    filename=str(records[row]['filename']),
+                    pre_text=str(records[row]['pre_text']),
+                    post_text=str(records[row]['post_text']),
+                    table_ori=str(records[row]['table_ori']),
+                    question=str(records[row]['question']),
+                    steps=str(records[row]['steps']),
+                    program=str(records[row]['program']),
+                    answer=str(records[row]['answer']),
+                    exe_answer=str(records[row]['exe_answer'])
+                )
+                data_objects.append(data_object)
+        
+        session.add_all(data_objects)
+        session.commit()
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        session.rollback()
+    finally:
+        session.close()
+    
 
 def get_agents(engine):
     

@@ -56,7 +56,8 @@ class Agent:
     def get_response(self, agent_input):
         
         messages = self.create_messages(agent_input)
-        tools = self.get_tools()
+        # tools = self.get_tools()
+        tools = []
         json = True
         
         response = self.call_llm(
@@ -74,7 +75,7 @@ class Agent:
 
         try:
             completion = self.client.chat.completions.create(
-                model="gpt-4o",
+                model="gpt-4o-mini",
                 messages=messages,
                 tools = tools if len(tools) > 0 else None,
                 response_format= { "type": "json_object" } if json_mode else None

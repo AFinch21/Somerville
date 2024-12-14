@@ -1,24 +1,78 @@
 from fastapi import FastAPI
-from model.Model import ResponseModel, EvaluationModel
+import json
+from model.Model import ResponseModel, EvaluationModel, Operation
 from database.Database import get_db
+from database.Operations import get_agents, upload_input_data, get_question_data
+from agents.AgentArchetype import Agent
+from agents.AgentInitialisation import iniatialise_agents
+from utilities.PromptTemplates import entity_extraction_message
+from utilities.OperationExecutor import OperationChainExecutor
 
 app = FastAPI()
 
+# Initialise our database
 db = get_db()
 
-# agent_data = get_agents(db)
+# Upload out data from a pre-processed JSON
+json_file_path = "data_exploration\data\ConvFincQA_data.json"
+upload_input_data(db, json_file_path)
 
-# agent_pod = iniatialise_agents(agent_data)
+# Go to our database and grab our agents and initialise them
+agent_data = get_agents(db)
+agent_pod = iniatialise_agents(agent_data)
 
-@app.get("/get_response", response_model=ResponseModel)
-async def get_response():
+
+@app.post("/answer_question", response_model=ResponseModel)
+async def answer_question(response_model: ResponseModel):
     """
     Endpoint to get a basic response message.
     """
-    response = {
-        "message": "This is your response!",
-        "status": "Success"
-    }
+    question_metadata = get_question_data(db, response_model.message)
+
+    operation_steps = agent_pod["program_builder"].get_response(response_model.message).choices[0].message.content
+    
+    operation_steps_json = json.loads(operation_steps)
+    
+    entity_extractor_message = entity_extraction_message(
+        operation_steps_json, 
+        question_metadata.pre_text,
+        question_metadata.post_text,
+        question_metadata.table_ori
+        )
+    
+    response_content = agent_pod["entity_extractor"].get_response(entity_extractor_message).choices[0].message.content
+    
+    extracted_entities_steps_json = json.loads(response_content)
+    
+    operations = [
+        Operation(step=step['step'], operation=step['op'], arg_1=step['arg1'], arg_2=step['arg2'])
+        for step in extracted_entities_steps_json['steps']
+    ]
+    
+    try:
+        executor = OperationChainExecutor(operations)
+        result = executor.execute()
+    except:
+        result = "Could not execute operation chain"
+    
+    print(operations)
+    print(result)
+    
+    # # Example usage
+    # operations = [
+    #     Operation(step=1, operation='Subtract', arg_1='20628', arg_2='18733'),
+    #     Operation(step=2, operation='Divide', arg_1='step_1', arg_2='18733'),
+    #     Operation(step=3, operation='Multiply', arg_1='step_2', arg_2='100'),
+    # ]
+
+    executor = OperationChainExecutor(operations)
+    result = executor.execute()
+
+    
+    response = ResponseModel(
+        message=str(result),
+        status="Success"
+    )
     return response
 
 @app.get("/get_evaluation", response_model=EvaluationModel)
@@ -35,3 +89,4 @@ async def get_evaluation():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+    

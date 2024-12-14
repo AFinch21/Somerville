@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, relationship, Mapped, mapped_column
-from sqlalchemy import ForeignKey, String, Boolean
+from sqlalchemy import ForeignKey, String, Boolean, Column, Float
 from sqlalchemy.dialects.postgresql import UUID
 from typing import List
 
@@ -48,6 +48,26 @@ class ResponseModel(Base):
 
     def __repr__(self) -> str:
         return f"ResponseModel(request_id={self.request_id!r}, agent_id={self.agent_id!r}, user_input={self.user_input!r})"
+    
+    
+class ConvFinQAData(Base):
+    __tablename__ = 'convfinqa_data'  # replace with your actual table name
+
+    # Define columns
+    id = Column(String, primary_key=True)  # Assuming 'id' is unique or can be primary key
+    company = Column(String)
+    year = Column(String)
+    filename = Column(String)
+    pre_text = Column(String)
+    post_text = Column(String)
+    table_ori = Column(String)
+    question = Column(String)
+    steps = Column(String)
+    program = Column(String)
+    answer = Column(String)
+    exe_answer = Column(Float)
+    str_exe_answer = Column(String) 
+
 
 # Example setup (if you are using PostgreSQL)
 DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
