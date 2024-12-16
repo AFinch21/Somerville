@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from pydantic import UUID4
-from typing import Optional
+from typing import Optional, Union
 
 # Define a Pydantic model for the response payload
 class ResponseModel(BaseModel):
@@ -61,5 +61,5 @@ class ConvFinQADataQuestion(BaseModel):
 class Operation(BaseModel):
     step: int
     operation: str
-    arg_1: str
-    arg_2: str
+    arg_1: Union[float, str]
+    arg_2: Union[float, str]

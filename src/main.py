@@ -14,7 +14,7 @@ app = FastAPI()
 db = get_db()
 
 # Upload out data from a pre-processed JSON
-json_file_path = "data_exploration\data\ConvFincQA_data.json"
+json_file_path = "data/ConvFincQA_data.json"
 upload_input_data(db, json_file_path)
 
 # Go to our database and grab our agents and initialise them
