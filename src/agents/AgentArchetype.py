@@ -56,9 +56,7 @@ class Agent:
     def get_response(self, agent_input):
         
         messages = self.create_messages(agent_input)
-        
-        print(messages)
-        
+                
         # tools = self.get_tools()
         tools = []
         json = True

@@ -3,8 +3,24 @@ from pydantic import UUID4
 from typing import Optional, Union
 
 # Define a Pydantic model for the response payload
-class ResponseModel(BaseModel):
+class QueryRequest(BaseModel):
     message: str
+    status: str
+    
+class Operation(BaseModel):
+    step: int
+    operation: str
+    arg_1: Union[float, str]
+    arg_2: Union[float, str]
+    
+class QueryResponse(BaseModel):
+    question: str
+    answer: float
+    operations: list[Operation]
+    steps: int
+    input_tokens: int
+    ouput_tokens: int
+    latency: float
     status: str
 
 # Define a Pydantic model for the evaluation payload
@@ -58,8 +74,3 @@ class ConvFinQADataQuestion(BaseModel):
     table_ori: Optional[str] = None
     question: Optional[str] = None
     
-class Operation(BaseModel):
-    step: int
-    operation: str
-    arg_1: Union[float, str]
-    arg_2: Union[float, str]
