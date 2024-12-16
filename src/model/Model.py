@@ -5,6 +5,12 @@ from typing import Optional, Union
 # Define a Pydantic model for the response payload
 class QueryRequest(BaseModel):
     message: str
+    max_retries: int
+    status: str
+    
+class EvaluationRequest(BaseModel):
+    n_questions: int
+    max_retries: int
     status: str
     
 class Operation(BaseModel):
@@ -15,13 +21,36 @@ class Operation(BaseModel):
     
 class QueryResponse(BaseModel):
     question: str
-    answer: float
+    answer: Union[float, str]
     operations: list[Operation]
     steps: int
     input_tokens: int
     ouput_tokens: int
     latency: float
     status: str
+    
+class EvaluationResponse(BaseModel):
+    question: str
+    answer: Union[float, str]
+    predicted_operations: list[Operation]
+    predicted_steps: int
+    input_tokens: int
+    ouput_tokens: int
+    latency: float
+    true_steps: int
+    true_program: str
+    true_answer: float
+    
+class EvaluationSummary(BaseModel):
+    responses: list[EvaluationResponse]
+    num_eval_questions: int
+    num_answered_questions: int
+    num_correct_answers: int
+    answer_accuracy: float
+    step_accuracy: float
+    average_latency: float
+    max_latency: float
+    min_latency: float
 
 # Define a Pydantic model for the evaluation payload
 class EvaluationModel(BaseModel):
@@ -73,4 +102,17 @@ class ConvFinQADataQuestion(BaseModel):
     post_text: Optional[str] = None
     table_ori: Optional[str] = None
     question: Optional[str] = None
+    
+class ConvFinQADataEval(BaseModel):
+    id: str
+    company: Optional[str] = None
+    year: Optional[str] = None
+    filename: Optional[str] = None
+    pre_text: Optional[str] = None
+    post_text: Optional[str] = None
+    table_ori: Optional[str] = None
+    question: Optional[str] = None
+    steps: Optional[str] = None
+    program: Optional[str] = None
+    exe_answer: float
     

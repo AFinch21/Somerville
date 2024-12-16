@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 import json
-from model.Model import QueryRequest, EvaluationModel, Operation, QueryResponse
+from model.Model import QueryRequest, Operation, QueryResponse, EvaluationResponse, EvaluationSummary, EvaluationRequest
 from database.Database import get_db
-from database.Operations import get_agents, upload_input_data, get_question_data
+from database.Operations import get_agents, upload_input_data, get_evaluation_data, get_all_question_data
 from agents.AgentArchetype import Agent
 from agents.AgentInitialisation import iniatialise_agents
 from utilities.PromptTemplates import entity_extraction_message, operation_chains_message
-from utilities.OperationExecutor import OperationChainExecutor
+from utilities.ProcessEvalResults import process_evaluation_run
+from utilities.AgentWorkflow import execute_agent_workflow
 from logger.Logger import get_logger
 
 app = FastAPI()
@@ -35,91 +36,79 @@ except:
     
 logger.info("Application setup complete")
 
+
 @app.get("/")
 async def root():
     return {"Hello World"}
 
+@app.get("/get_question_list")
+async def get_question_list():
+    question_metadata = get_all_question_data(db)
+    return question_metadata
+
+
 @app.post("/answer_question", response_model=QueryResponse)
 async def answer_question(query_request: QueryRequest):
     """
-    Endpoint to get a basic response message.
+    Endpoint to process a question and execute a corresponding workflow.
+
+    This endpoint receives a question encapsulated within a `QueryRequest` object
+    and utilizes the `execute_agent_workflow` function to process the question,
+    match it with relevant data, and perform necessary operations. Upon execution
+    of the workflow, it returns a `QueryResponse` object that contains the result 
+    of the operations, which is then sent back in the response to the requester.
+
+    Parameters:
+    - query_request: An instance of `QueryRequest` containing the question to be answered.
+
+    Returns:
+    - QueryResponse: An object containing the results of the processed query, including the
+      answer, details of operations executed, and relevant metadata.
     """
-    logger.info("Question answer worklfow started")
-    logger.info(f"Question: {query_request.message}")
-    question_metadata = get_question_data(db, query_request.message)
     
-    operation_chain_message = operation_chains_message(
-        query_request.message, 
-        question_metadata.pre_text,
-        question_metadata.post_text,
-        question_metadata.table_ori
-        )
+    result = execute_agent_workflow(db, agent_pod, query_request)
     
-    logger.llm(f'Sending request to {agent_pod['program_builder'].agent_name}...')
-    operation_steps = agent_pod["program_builder"].get_response(operation_chain_message).choices[0].message.content
-    logger.llm(f'Sending request to {agent_pod['program_builder'].agent_name} executed')
-    
-    operation_steps_json = json.loads(operation_steps)
-    
-    entity_extractor_message = entity_extraction_message(
-        operation_steps_json, 
-        question_metadata.pre_text,
-        question_metadata.post_text,
-        question_metadata.table_ori
-        )
-    
-    logger.llm(f'Sending request to {agent_pod['entity_extractor'].agent_name}...')
-    response_content = agent_pod["entity_extractor"].get_response(entity_extractor_message).choices[0].message.content
-    logger.llm(f'Sending request to {agent_pod['entity_extractor'].agent_name} executed')
-    
-    extracted_entities_steps_json = json.loads(response_content)
-    
-    operations = [
-        Operation(step=step['step'], operation=step['op'], arg_1=step['arg1'], arg_2=step['arg2'])
-        for step in extracted_entities_steps_json['steps']
-    ]
-    
-    logger.info(f"Operations steps to be executed: {len(operations)}")
-    logger.info(f"Operations to be executed: {operations}")
-    
-    try:
-        logger.info("Attempting to execute operation chain...")
-        executor = OperationChainExecutor(operations)
-        result = executor.execute()
-        logger.info("Operation chain executed successfully")
-    except Exception as e:
-        # Log the exception with an error message
-        logger.error(f"Failed to execute operation chain: {e}")
-        
-        logger.exception("Exception occurred")
-        
-        # Set the result to indicate failure
-        result = "Could not execute operation chain"
 
+    return result
 
-    query_response = QueryResponse(
-        question=query_request.message,
-        answer=result,
-        operations=operations,
-        steps=len(operations),
-        input_tokens=100,
-        ouput_tokens=100,
-        latency=100.0,
-        status="Success"
-    )
-    
-    return query_response
-
-@app.get("/get_evaluation", response_model=EvaluationModel)
-async def get_evaluation():
+@app.post("/get_evaluation", response_model=EvaluationSummary)
+async def get_evaluation(eval_request: EvaluationRequest):
     """
     Endpoint to get an evaluation.
     """
-    evaluation = {
-        "score": 85,
-        "feedback": "Good job! Keep it up!"
-    }
-    return evaluation
+    
+    evaluation_set = get_evaluation_data(db, eval_request.n_questions)
+    
+    responses = []
+    
+    for eval_question in evaluation_set:
+        query_request = QueryRequest(
+            message=eval_question.question,
+            max_retries=eval_request.max_retries,
+            status="Success"
+        )
+
+        result = execute_agent_workflow(db, agent_pod, query_request)
+        
+        evaluation_response = EvaluationResponse(
+            question=result.question,
+            answer=result.answer,
+            predicted_operations=result.operations,
+            predicted_steps=len(result.operations),
+            input_tokens=100,
+            ouput_tokens=100,
+            latency=100.0,
+            true_steps=2,
+            true_program=eval_question.program,
+            true_answer=eval_question.exe_answer
+        )
+
+        responses.append(evaluation_response)
+    
+    evaluation_summary = process_evaluation_run(responses)
+    
+
+    return evaluation_summary
 
 if __name__ == "__main__":
     import uvicorn

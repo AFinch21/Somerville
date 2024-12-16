@@ -1,8 +1,9 @@
 from database.ORM import Agent, AgentPrompts, ResponseModel, ConvFinQAData
-from model.Model import Prompt, BaseAgent, ConvFinQADataQuestion
+from model.Model import Prompt, BaseAgent, ConvFinQADataQuestion, ConvFinQADataEval
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker, declarative_base
-from model.Model import ConvFinQADataSchema
+from sqlalchemy import select, func
+import random
 import json
 
 Base = declarative_base()
@@ -27,23 +28,48 @@ def get_question_data(engine, question):
             )
     
     return question
-    
 
-def get_evaluation_stats(engine, agent_id):
-    # stmt = select(AgentPrompts).where(AgentPrompts.agent_id == agent_id)
+def get_all_question_data(engine):
+    stmt = select(ConvFinQAData)
+    questions = []  
+    with engine.connect() as conn:
+        for row in conn.execute(stmt):
+            question = ConvFinQADataQuestion(
+                id=row[0],
+                company=row[1],
+                year=row[2],
+                filename=row[3],
+                pre_tex=row[4],
+                post_text=row[5],
+                table_ori=row[6],
+                question=row[7],
+            )
+            questions.append(question) 
+    return questions  
 
-    
-    
-    # with engine.connect() as conn:
-    #     for row in conn.execute(stmt):
-    #         prompt = Prompt(
-    #             agent_id = row[0],
-    #             system_prompt= row[1],
-    #             user_prompt= row[2]
-    #         )
-    
-    # return prompt
-    pass
+def get_evaluation_data(engine, n):
+    stmt = select(ConvFinQAData).order_by(func.random()).limit(n)
+
+    with engine.connect() as conn:
+        result = conn.execute(stmt)
+        questions = []
+        for row in result:
+            question = ConvFinQADataEval(
+                id=row[0],
+                company=row[1],
+                year=row[2],
+                filename=row[3],
+                pre_tex=row[4],
+                post_text=row[5],
+                table_ori=row[6],
+                question=row[7],
+                steps=row[8],
+                program=row[9],
+                exe_answer=row[11]
+            )
+            questions.append(question)
+    return questions
+
 
 def upload_input_data(engine, json_file_path):
     Session = sessionmaker(bind=engine)
