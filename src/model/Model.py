@@ -22,6 +22,7 @@ class Operation(BaseModel):
 class QueryResponse(BaseModel):
     question: str
     answer: Union[float, str]
+    operation_arguments: list[Operation]
     operations: list[Operation]
     steps: int
     input_tokens: int

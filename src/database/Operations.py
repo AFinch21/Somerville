@@ -34,7 +34,7 @@ def get_all_question_data(engine):
     questions = []  
     with engine.connect() as conn:
         for row in conn.execute(stmt):
-            question = ConvFinQADataQuestion(
+            question = ConvFinQADataEval(
                 id=row[0],
                 company=row[1],
                 year=row[2],
@@ -43,6 +43,9 @@ def get_all_question_data(engine):
                 post_text=row[5],
                 table_ori=row[6],
                 question=row[7],
+                steps=row[8],
+                program=row[9],
+                exe_answer=row[11]
             )
             questions.append(question) 
     return questions  
