@@ -50,12 +50,19 @@ def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest) -> 
             
             operation_steps_json = json.loads(operation_steps)
             
+            operation_arguments = [
+                Operation(step=step['step'], operation=step['op'], arg_1=step['arg1'], arg_2=step['arg2'])
+                for step in operation_steps_json['steps']
+            ]
+            
             entity_extractor_message = entity_extraction_message(
                 operation_steps_json, 
                 question_metadata.pre_text,
                 question_metadata.post_text,
                 question_metadata.table_ori
                 )
+            
+            
             
             logger.llm(f'Sending request to {agent_pod['entity_extractor'].agent_name}...')
             response_content = agent_pod["entity_extractor"].get_response(entity_extractor_message).choices[0].message.content
@@ -80,6 +87,7 @@ def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest) -> 
                 query_response = QueryResponse(
                     question=query_request.message,
                     answer="Could not create operation chain",
+                    operation_arguments=DUMMY_OPERATIONS,
                     operations=DUMMY_OPERATIONS,
                     steps=len(operations),
                     input_tokens=100,
@@ -110,6 +118,7 @@ def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest) -> 
     query_response = QueryResponse(
         question=query_request.message,
         answer=result,
+        operation_arguments=operation_arguments,
         operations=operations,
         steps=len(operations),
         input_tokens=100,
