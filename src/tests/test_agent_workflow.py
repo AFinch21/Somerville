@@ -5,7 +5,7 @@ import os
 from model.Model import BaseAgent, QueryRequest
 from agents.AgentInitialisation import iniatialise_agents
 from utilities.AgentWorkflow import execute_agent_workflow
-from utilities.AppStartup import get_agents, iniatialise_agents
+from utilities.AppStartup import get_agents, iniatialise_agents, load_agents
 import json
 
 
@@ -16,6 +16,17 @@ agent = Agent(
         use_database=False,
         local_prompts="src/data/prompts.json",
     )
+
+def test_app_startup():
+    
+    db = None
+    use_database = False
+    agent_file_path = "src/data/agents.json"
+    agent_prompt_file_path = "src/data/prompts.json"
+    
+    agent_pod = load_agents(db, use_database, agent_file_path, agent_prompt_file_path)
+    
+    assert len(agent_pod) == 2
 
 def test_initialise_agents():
     agent_list = [
