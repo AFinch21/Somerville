@@ -1,6 +1,6 @@
 from agents.AgentArchetype import Agent
 
-def iniatialise_agents(agent_list) -> list:
+def iniatialise_agents(agent_list, use_database, local_prompts) -> list:
     
     new_agents = {}
     
@@ -9,7 +9,9 @@ def iniatialise_agents(agent_list) -> list:
         agent = Agent(
             agent_id=a.agent_id,
             agent_name=a.agent_name,
-            api_key=a.api_key
+            api_key=a.api_key,
+            use_database=use_database,
+            local_prompts=local_prompts
         )
         new_agents[agent.agent_name] = agent
         

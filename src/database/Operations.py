@@ -6,6 +6,7 @@ from sqlalchemy import select, func
 from logger.Logger import get_logger
 import os
 import json
+import random
 
 Base = declarative_base()
 # Get logger
@@ -13,105 +14,196 @@ logger = get_logger()
 
 #GET DATA FUNCTIONS
 
-def get_question_data(engine, question):
+def get_question_data(engine, question, file_path, database=True):
+    if database:
+        stmt = select(ConvFinQAData).where(ConvFinQAData.question == question)
+        
+        with engine.connect() as conn:
+            for row in conn.execute(stmt):
+                question_data = ConvFinQADataQuestion(
+                    id=row[0],
+                    company=row[1],
+                    year=row[2],
+                    filename=row[3],
+                    pre_tex=row[4],
+                    post_text=row[5],
+                    table_ori=row[6],
+                    question=row[7],
+                )
+                return question_data
+    else:        
+        with open(file_path, "r") as f:
+            data = json.load(f)
+            
+            for item in data:
+                if item["question"] == question:
+                    question_data = ConvFinQADataQuestion(
+                        id=item["id"],
+                        company=item["company"],
+                        year=item["year"],
+                        filename=item["filename"],
+                        pre_tex=item["pre_tex"],
+                        post_text=item["post_text"],
+                        table_ori=item["table_ori"],
+                        question=item["question"],
+                    )
+                    return question_data
     
-    stmt = select(ConvFinQAData).where(ConvFinQAData.question == question)
+    return None 
 
+def get_all_question_data(engine, file_path, database=True):
+    questions = []
+
+    if database:
+        # Use the database logic
+        stmt = select(ConvFinQAData)
+        
+        with engine.connect() as conn:
+            for row in conn.execute(stmt):
+                question = ConvFinQADataEval(
+                    id=row[0],
+                    company=row[1],
+                    year=row[2],
+                    filename=row[3],
+                    pre_tex=row[4],
+                    post_text=row[5],
+                    table_ori=row[6],
+                    question=row[7],
+                    steps=row[8],
+                    program=row[9],
+                    exe_answer=row[11],
+                )
+                questions.append(question)
+    else:
+        
+        with open(file_path, "r") as f:
+            data = json.load(f)
+            
+            for item in data:
+                question = ConvFinQADataEval(
+                    id=item["id"],
+                    company=item["company"],
+                    year=item["year"],
+                    filename=item["filename"],
+                    pre_tex=item["pre_tex"],
+                    post_text=item["post_text"],
+                    table_ori=item["table_ori"],
+                    question=item["question"],
+                    steps=item["steps"],
+                    program=item["program"],
+                    exe_answer=item["exe_answer"],
+                )
+                questions.append(question)
     
+    return questions
+
+def get_evaluation_data(engine, n, file_path, database=True):
+    questions = []
+
+    if database:
+        # Use the database logic
+        stmt = select(ConvFinQAData).order_by(func.random()).limit(n)
+        
+        with engine.connect() as conn:
+            result = conn.execute(stmt)
+            
+            for row in result:
+                question = ConvFinQADataEval(
+                    id=row[0],
+                    company=row[1],
+                    year=row[2],
+                    filename=row[3],
+                    pre_tex=row[4],
+                    post_text=row[5],
+                    table_ori=row[6],
+                    question=row[7],
+                    steps=row[8],
+                    program=row[9],
+                    exe_answer=row[11],
+                )
+                questions.append(question)
+    else:
+                
+        with open(file_path, "r") as f:
+            data = json.load(f)
+            
+            # Randomly select `n` items from the loaded data
+            sampled_items = random.sample(data, n)
+            
+            for item in sampled_items:
+                question = ConvFinQADataEval(
+                    id=item["id"],
+                    company=item["company"],
+                    year=item["year"],
+                    filename=item["filename"],
+                    pre_tex=item["pre_tex"],
+                    post_text=item["post_text"],
+                    table_ori=item["table_ori"],
+                    question=item["question"],
+                    steps=item["steps"],
+                    program=item["program"],
+                    exe_answer=item["exe_answer"],
+                )
+                questions.append(question)
     
-    with engine.connect() as conn:
-        for row in conn.execute(stmt):
-            question = ConvFinQADataQuestion(
-                id = row[0],
-                company= row[1],
-                year=row[2],
-                filename= row[3],
-                pre_tex=row[4],
-                post_text= row[5],
-                table_ori= row[6],
-                question=row[7],
-            )
-    
-    return question
-
-def get_all_question_data(engine):
-    stmt = select(ConvFinQAData)
-    questions = []  
-    with engine.connect() as conn:
-        for row in conn.execute(stmt):
-            question = ConvFinQADataEval(
-                id=row[0],
-                company=row[1],
-                year=row[2],
-                filename=row[3],
-                pre_tex=row[4],
-                post_text=row[5],
-                table_ori=row[6],
-                question=row[7],
-                steps=row[8],
-                program=row[9],
-                exe_answer=row[11]
-            )
-            questions.append(question) 
-    return questions  
-
-def get_evaluation_data(engine, n):
-    stmt = select(ConvFinQAData).order_by(func.random()).limit(n)
-
-    with engine.connect() as conn:
-        result = conn.execute(stmt)
-        questions = []
-        for row in result:
-            question = ConvFinQADataEval(
-                id=row[0],
-                company=row[1],
-                year=row[2],
-                filename=row[3],
-                pre_tex=row[4],
-                post_text=row[5],
-                table_ori=row[6],
-                question=row[7],
-                steps=row[8],
-                program=row[9],
-                exe_answer=row[11]
-            )
-            questions.append(question)
     return questions
 
 
-def get_agents(engine):
-    
-    stmt = select(Agent)
-
+def get_agents(engine, file_path, database=True):
     agents = []
     
-    with engine.connect() as conn:
-        for row in conn.execute(stmt):
+    if database:
+        # Use the existing database logic
+        stmt = select(Agent)
+        
+        with engine.connect() as conn:
+            for row in conn.execute(stmt):
+                agent = BaseAgent(
+                    agent_id=row[0],
+                    agent_name=row[1],
+                    api_key=row[2],
+                )
+                agents.append(agent)
+    else:
+        # Load the JSON file
+        with open(file_path, "r") as f:
+            data = json.load(f)
             
-            agent = BaseAgent(
-                agent_id = row[0],
-                agent_name= row[1],
-                api_key= row[2],
-            )
-            
-            agents.append(agent)
+            for item in data:
+                agent = BaseAgent(
+                    agent_id=item["agent_id"],
+                    agent_name=item["agent_name"],
+                    api_key=str(os.environ.get('OPENAI_API_KEY')),  # Replace API key
+                )
+                agents.append(agent)
     
     return agents
 
-def get_prompts(engine, agent_id):
-    stmt = select(AgentPrompts).where(AgentPrompts.agent_id == agent_id)
-
+def get_prompts(engine, agent_id, database, local_prompts):
+    if database:
+        stmt = select(AgentPrompts).where(AgentPrompts.agent_id == agent_id)
+        
+        with engine.connect() as conn:
+            for row in conn.execute(stmt):
+                prompt = Prompt(
+                    agent_id=row[0],
+                    system_prompt=row[1],
+                    user_prompt=row[2],
+                )
+                return prompt
+    else:        
+        with open(local_prompts, "r") as f:
+            data = json.load(f)
+            for item in data:
+                if item["agent_id"] == str(agent_id):
+                    prompt = Prompt(
+                        agent_id=item["agent_id"],
+                        system_prompt=item["system_prompt"],
+                        user_prompt=item["user_prompt"],
+                    )
+                    return prompt
     
-    
-    with engine.connect() as conn:
-        for row in conn.execute(stmt):
-            prompt = Prompt(
-                agent_id = row[0],
-                system_prompt= row[1],
-                user_prompt= row[2]
-            )
-    
-    return prompt
+    return None
 
 
 ### UPLOAD FUNCTIONS

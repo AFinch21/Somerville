@@ -16,34 +16,38 @@ app = FastAPI()
 # Get logger
 logger = get_logger()
 
-print(os.environ.get('OPENAI_API_KEY'))
-
-# Initialise our database
-db = get_db()
-init_db(db)
+# Define our local data storage
+use_database= os.environ.get('USE_DATABASE')
+json_file_path = "data/ConvFincQA_data.json"
+agent_file_path = "data/agents.json"
+agent_prompt_file_path = "data/prompts.json"
 
 try:
-    # Upload data from pre-processed JSON
-    json_file_path = "data/ConvFincQA_data.json"
-    agent_file_path = "data/agents.json"
-    agent_prompt_file_path = "data/prompts.json"
-    upload_input_data(db, json_file_path)
-    upload_agent_data(db, agent_file_path)
-    upload_prompt_data(db, agent_prompt_file_path)
-    logger.info("Data Upload Complete")
-except Exception as e:  
-    logger.warning(f"Data Upload failed - please check datafile. Error: {e}")
+    try:
+        # If you ant to use a SQL DB - initialise our database
+        if use_database:
+            db = get_db()
+            init_db(db)
+            upload_input_data(db, json_file_path)
+            upload_agent_data(db, agent_file_path)
+            upload_prompt_data(db, agent_prompt_file_path)
+            logger.info(f"Database use set to {use_database} - Data Upload Complete")
+        else:
+            db = None
+            logger.info(f"Database use set to {use_database} - using local JSONs")
+    except Exception as e:  
+        logger.warning(f"Data Upload failed - please check datafile. Error: {e}")
 
-# Go to our database and grab our agents and initialise them
-try:
-    agent_data = get_agents(db)
-    agent_pod = iniatialise_agents(agent_data)
-    logger.info("Application set up complete")
+    # Go to our database and grab our agents and initialise them
+    try:
+        agent_data = get_agents(db, agent_file_path, False)
+        agent_pod = iniatialise_agents(agent_data, False, agent_prompt_file_path)
+        logger.info("Application set up complete")
+    except Exception as e:  
+        logger.warning(f"Agent load failed - please check datafile. Error: {e}")
 except Exception as e:  
-    logger.warning(f"Agent load failed - please check datafile. Error: {e}")
-    
-logger.info("Application setup complete")
-
+        logger.error(f"Application load failed - Error: {e}")
+ 
 
 @app.get("/")
 async def root():
@@ -51,7 +55,7 @@ async def root():
 
 @app.get("/get_question_list")
 async def get_question_list():
-    question_metadata = get_all_question_data(db)
+    question_metadata = get_all_question_data(db, json_file_path, use_database)
     return question_metadata
 
 
@@ -74,7 +78,7 @@ async def answer_question(query_request: QueryRequest):
       answer, details of operations executed, and relevant metadata.
     """
     
-    result = execute_agent_workflow(db, agent_pod, query_request)
+    result = execute_agent_workflow(db, agent_pod, query_request, json_file_path, use_database)
     
 
     return result
@@ -85,7 +89,7 @@ async def get_evaluation(eval_request: EvaluationRequest):
     Endpoint to get an evaluation.
     """
     
-    evaluation_set = get_evaluation_data(db, eval_request.n_questions)
+    evaluation_set = get_evaluation_data(db, eval_request.n_questions, json_file_path, use_database)
     
     responses = []
     
