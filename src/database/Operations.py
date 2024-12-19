@@ -3,10 +3,15 @@ from model.Model import Prompt, BaseAgent, ConvFinQADataQuestion, ConvFinQADataE
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import select, func
-import random
+from logger.Logger import get_logger
+import os
 import json
 
 Base = declarative_base()
+# Get logger
+logger = get_logger()
+
+#GET DATA FUNCTIONS
 
 def get_question_data(engine, question):
     
@@ -74,49 +79,6 @@ def get_evaluation_data(engine, n):
     return questions
 
 
-def upload_input_data(engine, json_file_path):
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    try:
-        Base.metadata.create_all(engine)
-        
-        with open(json_file_path, 'r') as file:
-            records = json.load(file)
-        
-        data_objects = []
-        
-        for row in records:
-            
-            existing_record = session.query(ConvFinQAData).filter_by(id=records[row]['id']).first()
-            
-            if not existing_record:
-                data_object = ConvFinQAData(
-                    id=records[row]['id'],
-                    company=str(records[row]['company']),
-                    year=str(records[row]['year']),
-                    filename=str(records[row]['filename']),
-                    pre_text=str(records[row]['pre_text']),
-                    post_text=str(records[row]['post_text']),
-                    table_ori=str(records[row]['table_ori']),
-                    question=str(records[row]['question']),
-                    steps=str(records[row]['steps']),
-                    program=str(records[row]['program']),
-                    answer=str(records[row]['answer']),
-                    exe_answer=str(records[row]['exe_answer'])
-                )
-                data_objects.append(data_object)
-        
-        session.add_all(data_objects)
-        session.commit()
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        session.rollback()
-    finally:
-        session.close()
-    
-
 def get_agents(engine):
     
     stmt = select(Agent)
@@ -150,3 +112,111 @@ def get_prompts(engine, agent_id):
             )
     
     return prompt
+
+
+### UPLOAD FUNCTIONS
+
+        
+def upload_input_data(engine, json_file_path):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    try:
+        Base.metadata.create_all(engine)
+        
+        with open(json_file_path, 'r') as file:
+            records = json.load(file)
+        
+        data_objects = []
+        
+        for row in records:
+            
+            existing_record = session.query(ConvFinQAData).filter_by(id=records[row]['id']).first()
+            
+            if not existing_record:
+                logger.info(f"Record {records[row]['id']} not found in DB - uploading...")
+                data_object = ConvFinQAData(
+                    id=records[row]['id'],
+                    company=str(records[row]['company']),
+                    year=str(records[row]['year']),
+                    filename=str(records[row]['filename']),
+                    pre_text=str(records[row]['pre_text']),
+                    post_text=str(records[row]['post_text']),
+                    table_ori=str(records[row]['table_ori']),
+                    question=str(records[row]['question']),
+                    steps=str(records[row]['steps']),
+                    program=str(records[row]['program']),
+                    answer=str(records[row]['answer']),
+                    exe_answer=str(records[row]['exe_answer'])
+                )
+                data_objects.append(data_object)
+        
+        session.add_all(data_objects)
+        session.commit()
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        session.rollback()
+    finally:
+        session.close()
+
+def upload_prompt_data(engine, json_file_path):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    try:
+        Base.metadata.create_all(engine)
+
+        with open(json_file_path, 'r') as file:
+            records = json.load(file) 
+
+        data_objects = []
+        for record in records:  
+            existing_record = session.query(AgentPrompts).filter_by(agent_id=record['agent_id']).first()
+            
+            if not existing_record:
+                logger.info(f"Agent {record['agent_id']} not found in DB - uploading...")
+                data_object = AgentPrompts(
+                    agent_id=record['agent_id'],
+                    system_prompt=str(record['system_prompt']),
+                    user_prompt=str(record['user_prompt']),
+                    json_mode=bool(record['json_mode'])
+                )
+                data_objects.append(data_object)
+
+        session.add_all(data_objects)
+        session.commit()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        session.rollback()
+    finally:
+        session.close()
+        
+def upload_agent_data(engine, json_file_path):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    try:
+        Base.metadata.create_all(engine)
+
+        with open(json_file_path, 'r') as file:
+            records = json.load(file)  #
+
+        data_objects = []
+        for record in records:  
+            existing_record = session.query(Agent).filter_by(agent_id=record['agent_id']).first()
+            
+            if not existing_record:
+                logger.info(f"Agent {record['agent_name']} not found in DB - uploading...")
+                data_object = Agent(
+                    agent_id=record['agent_id'],
+                    agent_name=str(record['agent_name']),
+                    api_key=str(os.environ.get('OPENAI_API_KEY'))
+                )
+                data_objects.append(data_object)
+
+        session.add_all(data_objects)
+        session.commit()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        session.rollback()
+    finally:
+        session.close()

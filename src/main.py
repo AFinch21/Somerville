@@ -1,8 +1,9 @@
 from fastapi import FastAPI
-import json
+import os
 from model.Model import QueryRequest, Operation, QueryResponse, EvaluationResponse, EvaluationSummary, EvaluationRequest
 from database.Database import get_db
-from database.Operations import get_agents, upload_input_data, get_evaluation_data, get_all_question_data
+from database.ORM import init_db
+from database.Operations import get_agents, upload_input_data, get_evaluation_data, get_all_question_data, upload_agent_data, upload_prompt_data
 from agents.AgentArchetype import Agent
 from agents.AgentInitialisation import iniatialise_agents
 from utilities.PromptTemplates import entity_extraction_message, operation_chains_message
@@ -15,24 +16,31 @@ app = FastAPI()
 # Get logger
 logger = get_logger()
 
+print(os.environ.get('OPENAI_API_KEY'))
+
 # Initialise our database
 db = get_db()
+init_db(db)
 
 try:
-    # Upload out data from a pre-processed JSON
+    # Upload data from pre-processed JSON
     json_file_path = "data/ConvFincQA_data.json"
+    agent_file_path = "data/agents.json"
+    agent_prompt_file_path = "data/prompts.json"
     upload_input_data(db, json_file_path)
+    upload_agent_data(db, agent_file_path)
+    upload_prompt_data(db, agent_prompt_file_path)
     logger.info("Data Upload Complete")
-except:
-    logger.warning("Data Upload failed - please check datafile")
+except Exception as e:  
+    logger.warning(f"Data Upload failed - please check datafile. Error: {e}")
 
 # Go to our database and grab our agents and initialise them
 try:
     agent_data = get_agents(db)
     agent_pod = iniatialise_agents(agent_data)
     logger.info("Application set up complete")
-except:
-    logger.warning("Agent load failed - please check agent database")
+except Exception as e:  
+    logger.warning(f"Agent load failed - please check datafile. Error: {e}")
     
 logger.info("Application setup complete")
 
