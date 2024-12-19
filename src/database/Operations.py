@@ -46,6 +46,7 @@ def get_question_data(engine, question, file_path, database=True):
                         table_ori=str(data[item]["table_ori"]),
                         question=data[item]["question"],
                     )
+                    print(question_data.id)
                     return question_data
     
     return None 
@@ -80,17 +81,17 @@ def get_all_question_data(engine, file_path, database=True):
             
             for item in data:
                 question = ConvFinQADataEval(
-                    id=item["id"],
-                    company=item["company"],
-                    year=item["year"],
-                    filename=item["filename"],
-                    pre_tex=item["pre_tex"],
-                    post_text=item["post_text"],
-                    table_ori=item["table_ori"],
-                    question=item["question"],
-                    steps=item["steps"],
-                    program=item["program"],
-                    exe_answer=item["exe_answer"],
+                    id=str(data[item]["id"]),
+                    company=str(data[item]["company"]),
+                    year=str(data[item]["year"]),
+                    filename=str(data[item]["filename"]),
+                    pre_text=str(data[item]["pre_text"]),
+                    post_text=str(data[item]["post_text"]),
+                    table_ori=str(data[item]["table_ori"]),
+                    question=str(data[item]["question"]),
+                    steps=str(data[item]["steps"]),
+                    program=str(data[item]["program"]),
+                    exe_answer=str(data[item]["exe_answer"]),
                 )
                 questions.append(question)
     
@@ -122,29 +123,30 @@ def get_evaluation_data(engine, n, file_path, database=True):
                 )
                 questions.append(question)
     else:
-                
         with open(file_path, "r") as f:
             data = json.load(f)
-            
             # Randomly select `n` items from the loaded data
-            sampled_items = random.sample(data, n)
-            
+            if isinstance(data, dict):
+                sampled_keys = random.sample(list(data.keys()), n)  
+                sampled_items = [data[key] for key in sampled_keys]
+            else:
+                sampled_items = random.sample(data, n) 
+                
             for item in sampled_items:
                 question = ConvFinQADataEval(
-                    id=item["id"],
-                    company=item["company"],
-                    year=item["year"],
-                    filename=item["filename"],
-                    pre_tex=item["pre_tex"],
-                    post_text=item["post_text"],
-                    table_ori=item["table_ori"],
-                    question=item["question"],
-                    steps=item["steps"],
-                    program=item["program"],
-                    exe_answer=item["exe_answer"],
+                    id=str(item["id"]),
+                    company=str(item["company"]),
+                    year=str(item["year"]),
+                    filename=str(item["filename"]),
+                    pre_text=str(item["pre_text"]),  
+                    post_text=str(item["post_text"]),
+                    table_ori=str(item["table_ori"]),
+                    question=str(item["question"]),
+                    steps=str(item["steps"]),
+                    program=str(item["program"]),
+                    exe_answer=str(item["exe_answer"]),
                 )
                 questions.append(question)
-    
     return questions
 
 
