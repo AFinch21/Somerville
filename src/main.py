@@ -1,13 +1,15 @@
 from fastapi import FastAPI
-import json
+import os
 from model.Model import QueryRequest, Operation, QueryResponse, EvaluationResponse, EvaluationSummary, EvaluationRequest
 from database.Database import get_db
-from database.Operations import get_agents, upload_input_data, get_evaluation_data, get_all_question_data
+from database.ORM import init_db
+from database.Operations import get_agents, upload_input_data, get_evaluation_data, get_all_question_data, upload_agent_data, upload_prompt_data
 from agents.AgentArchetype import Agent
 from agents.AgentInitialisation import iniatialise_agents
 from utilities.PromptTemplates import entity_extraction_message, operation_chains_message
 from utilities.ProcessEvalResults import process_evaluation_run
 from utilities.AgentWorkflow import execute_agent_workflow
+from utilities.AppStartup import initialize_database, load_agents
 from logger.Logger import get_logger
 
 app = FastAPI()
@@ -15,35 +17,36 @@ app = FastAPI()
 # Get logger
 logger = get_logger()
 
-# Initialise our database
-db = get_db()
+# Define our local data storage
+use_database= True if os.environ.get('USE_DATABASE') == 'yes' else False
+json_file_path = "data/ConvFincQA_data.json"
+agent_file_path = "data/agents.json"
+agent_prompt_file_path = "data/prompts.json"
 
+# Run this startup wrapper to get everything set up
 try:
-    # Upload out data from a pre-processed JSON
-    json_file_path = "data/ConvFincQA_data.json"
-    upload_input_data(db, json_file_path)
-    logger.info("Data Upload Complete")
-except:
-    logger.warning("Data Upload failed - please check datafile")
-
-# Go to our database and grab our agents and initialise them
-try:
-    agent_data = get_agents(db)
-    agent_pod = iniatialise_agents(agent_data)
-    logger.info("Application set up complete")
-except:
-    logger.warning("Agent load failed - please check agent database")
+    # Step 1: Initialize the database
+    db = initialize_database(json_file_path, agent_file_path, agent_prompt_file_path, use_database)
     
-logger.info("Application setup complete")
+    # Step 2: Load and initialize agents
+    agent_pod = load_agents(db, use_database, agent_file_path, agent_prompt_file_path)
 
+    if agent_pod:
+        logger.info("Application setup complete.")
+    else:
+        logger.warning("Application setup incomplete. Check previous errors.")
 
+except Exception as error:
+    logger.error(f"Application failed to load. Error: {error}")
+
+ 
 @app.get("/")
 async def root():
     return {"Hello World"}
 
 @app.get("/get_question_list")
 async def get_question_list():
-    question_metadata = get_all_question_data(db)
+    question_metadata = get_all_question_data(db, json_file_path, use_database)
     return question_metadata
 
 
@@ -66,7 +69,7 @@ async def answer_question(query_request: QueryRequest):
       answer, details of operations executed, and relevant metadata.
     """
     
-    result = execute_agent_workflow(db, agent_pod, query_request)
+    result = execute_agent_workflow(db, agent_pod, query_request, json_file_path, use_database)
     
 
     return result
@@ -77,7 +80,7 @@ async def get_evaluation(eval_request: EvaluationRequest):
     Endpoint to get an evaluation.
     """
     
-    evaluation_set = get_evaluation_data(db, eval_request.n_questions)
+    evaluation_set = get_evaluation_data(agent_pod, eval_request.n_questions, json_file_path, use_database)
     
     responses = []
     

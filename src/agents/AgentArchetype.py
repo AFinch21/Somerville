@@ -5,14 +5,16 @@ from database.Operations import get_prompts, get_agents
 from database.Database import get_db
 
 class Agent:
-    def __init__(self, agent_id, agent_name, api_key):
+    def __init__(self, agent_id, agent_name, api_key, use_database, local_prompts):
         self.agent_id = agent_id
         self.agent_name = agent_name
         self.api_key = api_key
+        self.use_database = use_database
+        self.local_prompts = local_prompts
         self.client = self.get_client()
         self.database = get_db()
-        self.system_prompt = get_prompts(self.database, agent_id).system_prompt
-        self.user_prompt = get_prompts(self.database, agent_id).user_prompt
+        self.system_prompt = get_prompts(self.database, agent_id, use_database, local_prompts).system_prompt
+        self.user_prompt = get_prompts(self.database, agent_id, use_database, local_prompts).user_prompt
 
 
     def get_client(self):

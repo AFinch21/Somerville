@@ -2,8 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, relationship, Mapped, mapped_column
 from sqlalchemy import ForeignKey, String, Boolean, Column, Float
 from sqlalchemy.dialects.postgresql import UUID
+from logger.Logger import get_logger
 from typing import List
 
+logger = get_logger()
 Base = declarative_base()
 
 class Agent(Base):
@@ -69,13 +71,14 @@ class ConvFinQAData(Base):
     str_exe_answer = Column(String) 
 
 
-# Example setup (if you are using PostgreSQL)
-DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
-engine = create_engine(DATABASE_URL)
-Base.metadata.create_all(engine)
+# Helper function to create the database connection and tables
+def init_db(engine):
+    try:
+        Base.metadata.create_all(engine)
+        logger.info("Database schema created successfully.")
+        return engine
+    except Exception as e:  
+        logger.warning(f"Table creation failed - please check datafile. Error: {e}")
 
-# Connect to the database
-connection = engine.connect()
-
-# Close the connection
-connection.close()
+if __name__ == "__main__":
+    init_db()

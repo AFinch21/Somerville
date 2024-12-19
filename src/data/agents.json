@@ -1,0 +1,12 @@
+[
+    {
+      "agent_id": "33ccb890-1673-4110-83fc-cf7fda74a01a",
+      "agent_name": "program_builder",
+      "api_key": "<KEY>"
+    },
+    {
+      "agent_id": "33ccb890-1673-4110-83fc-cf7fda74a01b",
+      "agent_name": "entity_extractor",
+      "api_key": "<KEY>"
+    }
+  ]

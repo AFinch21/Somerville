@@ -10,7 +10,7 @@ from logger.Logger import get_logger
 # Get logger
 logger = get_logger()
 
-def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest) -> QueryResponse:
+def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest, local_data: json, database: bool) -> QueryResponse:
     """
     Executes a bespoke workflow to process and respond to a query request.
 
@@ -30,9 +30,10 @@ def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest) -> 
       the number of input and output tokens, execution latency, and status.
     """
     
-    logger.info("Question answer worklfow started")
+    logger.info("Question answer workflow started")
     logger.info(f"Question: {query_request.message}")
-    question_metadata = get_question_data(db, query_request.message)
+    print(local_data)
+    question_metadata = get_question_data(db, query_request.message, local_data, database)
 
     operation_chain_message = operation_chains_message(
         query_request.message, 
