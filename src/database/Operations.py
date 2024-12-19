@@ -34,18 +34,17 @@ def get_question_data(engine, question, file_path, database=True):
     else:        
         with open(file_path, "r") as f:
             data = json.load(f)
-            
             for item in data:
-                if item["question"] == question:
+                if data[item]["question"] == question:
                     question_data = ConvFinQADataQuestion(
-                        id=item["id"],
-                        company=item["company"],
-                        year=item["year"],
-                        filename=item["filename"],
-                        pre_tex=item["pre_tex"],
-                        post_text=item["post_text"],
-                        table_ori=item["table_ori"],
-                        question=item["question"],
+                        id=str(data[item]["id"]),
+                        company=str(data[item]["company"]),
+                        year=str(data[item]["year"]),
+                        filename=str(data[item]["filename"]),
+                        pre_text=str(data[item]["pre_text"]),
+                        post_text=str(data[item]["post_text"]),
+                        table_ori=str(data[item]["table_ori"]),
+                        question=data[item]["question"],
                     )
                     return question_data
     

@@ -30,8 +30,9 @@ def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest, loc
       the number of input and output tokens, execution latency, and status.
     """
     
-    logger.info("Question answer worklfow started")
+    logger.info("Question answer workflow started")
     logger.info(f"Question: {query_request.message}")
+    print(local_data)
     question_metadata = get_question_data(db, query_request.message, local_data, database)
 
     operation_chain_message = operation_chains_message(
