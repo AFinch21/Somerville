@@ -1,6 +1,18 @@
 # Somerville  
 Welcome to **Somerville**! A solution to the **ConvFinQA** challenge. Named after Mary Somerville, a Scottish mathematician.  
 
+## How Does Somerville Work?
+
+<div style="text-align: center;">  
+<img src="plots/arch_diagram.png" alt="Overview" title="Overview" width="60%">  
+</div>  
+
+Somerville is a simple full stack webapp, creating using:
+- A fastAPI backend
+- A niceGUI frontend
+- A simple relational SQL database
+- 2 LLM agents and an operation execution class
+
 ## How to Use Somerville  
 Somerville is an interactive chain of LLM calls designed to demonstrate how language models can be used to answer mathematical queries.  
 
