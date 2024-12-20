@@ -1,5 +1,40 @@
 # Somerville
-A repo for my solution to the ConvFinQA challenge. Named after Mary Somerville - scottish mathematician.
+Welcome to Somerville! A solution to the ConvFinQA challenge. Named after Mary Somerville - scottish mathematician.
+
+## How to se Somerville
+
+Somerville is an interactive chain of LLM calls designed to demostrate how language models can be used to answer mathematical queries.
+
+Simply start the app, choose your company, choose your question, and explore the LLM's thought process and evaluation of the answer.
+
+<div style="text-align: center;">
+  <img src="plots/overview.png" alt="Overview" title="Overview" width="60%">
+</div>
+
+After hitting 'Go!', check out the plan the LLM has created on the 'Plan' tab - this shows the LLM's thought process on how to solve the problem and descriptions of the arguments it knows it needs to extract.
+
+<div style="text-align: center;">
+  <img src="plots/plan.png" alt="Plan" title="Plan" width="60%">
+</div>
+
+Then check out the 'Extract' tab - here you can see the information the LLM has been provided, as well as its choices on what values to extract, based on the descriptions in the plan.
+
+<div style="text-align: center;">
+  <img src="plots/extraction.png" alt="Extraction" title="Extraction" width="60%">
+</div>
+
+Next - we calculate the answer based on the operation chain and the values extracted by the LLM.
+
+<div style="text-align: center;">
+  <img src="plots/operations.png" alt="Operations" title="Operations" width="60%">
+</div>
+
+Finally - see the evaluation tab. This tab shows a detailed overview of what the LLM planned, extracted, and answered - compared to the true steps taken from the same question in the ConvFinQA dataset.
+
+<div style="text-align: center;">
+  <img src="plots/eval.png" alt="Evaluation" title="Evaluation" width="60%">
+</div>
+
 
 ## How to start Somerville
 
