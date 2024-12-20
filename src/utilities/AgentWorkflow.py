@@ -127,4 +127,6 @@ def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest, loc
         latency=end_time - start_time,  # Calculate elapsed time
         status="Success"
     )
+    logger.info("Succesfully executed workflow")
+    logger.info(f"Answer predicted{query_response.answer}")
     return query_response

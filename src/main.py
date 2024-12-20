@@ -78,7 +78,26 @@ async def answer_question(query_request: QueryRequest):
 @app.post("/get_evaluation", response_model=EvaluationSummary)
 async def get_evaluation(eval_request: EvaluationRequest):
     """
-    Endpoint to get an evaluation.
+    Generate an evaluation summary for a given set of evaluation questions.
+
+    This function retrieves a set of evaluation questions based on the parameters passed in the
+    request. For each question in the evaluation set, it uses the agent workflow to generate
+    answers and operations related to the question, compares them with the ground-truth data,
+    and collates the results into an evaluation summary.
+
+    Parameters:
+        eval_request (EvaluationRequest): An object containing the following:
+            - n_questions (int): The number of evaluation questions to process.
+            - max_retries (int): The maximum number of retries for the LLM workflow.
+            - min_steps (Optional[int]): The minimum number of logical steps required in evaluation questions.
+
+    Returns:
+        EvaluationSummary: A summary object containing the overall evaluation results, per-question analysis,
+                           and aggregated statistics on prediction performance compared to the ground-truth.
+
+    Exceptions:
+        - Logs errors (if any) during the workflow execution for a particular question.
+        - Proceeds with default placeholder response in case of workflow failures.
     """
     
     evaluation_set = get_evaluation_data(db, eval_request.n_questions, json_file_path, use_database, eval_request.min_steps)
