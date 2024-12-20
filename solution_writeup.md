@@ -22,6 +22,12 @@ A number of assumptions should be clarified for this evaluation:
 - Full test results can be found here:
 
     `ConvFinQA_test_subset_50_results.json`    
+
+- The notebook for this analysis can be found here:
+
+    `src/data/data_exploration/02_results_analysis.ipynb`   
+
+
 ---
 
 ## **Overall Accuracy**
