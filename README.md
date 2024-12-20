@@ -1,98 +1,104 @@
-# Somerville
-Welcome to Somerville! A solution to the ConvFinQA challenge. Named after Mary Somerville - scottish mathematician.
+# Somerville  
+Welcome to **Somerville**! A solution to the **ConvFinQA** challenge. Named after Mary Somerville, a Scottish mathematician.  
 
-## How to se Somerville
+## How to Use Somerville  
+Somerville is an interactive chain of LLM calls designed to demonstrate how language models can be used to answer mathematical queries.  
 
-Somerville is an interactive chain of LLM calls designed to demostrate how language models can be used to answer mathematical queries.
+Simply start the app, choose your company, choose your question, and explore the LLM's thought process and evaluation of the answer.  
 
-Simply start the app, choose your company, choose your question, and explore the LLM's thought process and evaluation of the answer.
+<div style="text-align: center;">  
+<img src="plots/overview.png" alt="Overview" title="Overview" width="60%">  
+</div>  
 
-<div style="text-align: center;">
-  <img src="plots/overview.png" alt="Overview" title="Overview" width="60%">
-</div>
+After hitting **'Go!'**, check out the plan the LLM has created on the **'Plan'** tab. This shows the LLM's thought process on how to solve the problem and descriptions of the arguments it knows it needs to extract.  
 
-After hitting 'Go!', check out the plan the LLM has created on the 'Plan' tab - this shows the LLM's thought process on how to solve the problem and descriptions of the arguments it knows it needs to extract.
+<div style="text-align: center;">  
+<img src="plots/plan.png" alt="Plan" title="Plan" width="60%">  
+</div>  
 
-<div style="text-align: center;">
-  <img src="plots/plan.png" alt="Plan" title="Plan" width="60%">
-</div>
+Then check out the **'Extract'** tab. Here, you can see the information the LLM has been provided, as well as its choices on what values to extract, based on the descriptions in the plan.  
 
-Then check out the 'Extract' tab - here you can see the information the LLM has been provided, as well as its choices on what values to extract, based on the descriptions in the plan.
+<div style="text-align: center;">  
+<img src="plots/extraction.png" alt="Extraction" title="Extraction" width="60%">  
+</div>  
 
-<div style="text-align: center;">
-  <img src="plots/extraction.png" alt="Extraction" title="Extraction" width="60%">
-</div>
+Next, we calculate the answer based on the operation chain and the values extracted by the LLM.  
 
-Next - we calculate the answer based on the operation chain and the values extracted by the LLM.
+<div style="text-align: center;">  
+<img src="plots/operations.png" alt="Operations" title="Operations" width="60%">  
+</div>  
 
-<div style="text-align: center;">
-  <img src="plots/operations.png" alt="Operations" title="Operations" width="60%">
-</div>
+Finally, see the **'Evaluation'** tab. This tab shows a detailed overview of what the LLM planned, extracted, and answered - compared to the true steps taken from the same question in the ConvFinQA dataset.  
 
-Finally - see the evaluation tab. This tab shows a detailed overview of what the LLM planned, extracted, and answered - compared to the true steps taken from the same question in the ConvFinQA dataset.
+<div style="text-align: center;">  
+<img src="plots/eval.png" alt="Evaluation" title="Evaluation" width="60%">  
+</div>  
 
-<div style="text-align: center;">
-  <img src="plots/eval.png" alt="Evaluation" title="Evaluation" width="60%">
-</div>
+---
 
+## How to Start Somerville  
 
-## How to start Somerville
+### 1. Create a Virtual Environment  
+#### On Windows:  
+```bash  
+python -m venv venv  
+```  
 
-### 1. Create a Virtual Environment
+#### On Unix/macOS:  
+```bash  
+source venv/bin/activate  
+```  
 
-```bash
-# Assuming Windows machine
-python -m venv venv
-```
+#### On Windows:  
+```bash  
+.\venv\Scripts\activate  
+```  
 
-- **For Unix/macOS:**
-  ```bash
-  source venv/bin/activate
-  ```
+Then install dependencies from `requirements.txt`:  
 
-- **For Windows:**
-  ```bash
-  .\venv\Scripts\activate
-  ```
-```bash
-# Install dependencies from requirements.txt
-pip install -r requirements.txt
-```
+```bash  
+pip install -r requirements.txt  
+```  
 
-### 2. Add .env file
-For review and testing, it is recomended to set USE_DATABASE to 'no'.
+### 2. Add a `.env` File  
+For review and testing, it is recommended to set **`USE_DATABASE`** to `'no'`.  
 
-```bash
-OPENAI_API_KEY = <KEY>
-# If you want to use the datamodel, please create an empty database called 'somerville'
-DATABASE_URL = "postgresql://<username>:<pasword>@localhost:5432/somerville"
-# If you want to just use the JSON files in the application, set USE_DATABASE to 'no'
-USE_DATABASE = 'no'
-```
+```bash  
+OPENAI_API_KEY = <YOUR_API_KEY>  
 
-### 3. Start up backend
-Navigate to the /src/ file:
+# If you want to use the data model, please create an empty database called 'somerville'  
+DATABASE_URL = "postgresql://<username>:<password>@localhost:5432/somerville"  
 
-```bash
-(.venv) <your_path_to_somerville> cd /src
-```
-Start the fastAPI application:
+# If you want to just use the JSON files in the application, set USE_DATABASE to 'no'  
+USE_DATABASE = 'no'  
+```  
 
-```bash
-uvicorn main:app --host 0.0.0.0 --port 80 --reload
-```
+### 3. Start the Backend  
 
-### 3. Start up frontend
+Navigate to the `/src/` directory:  
 
-Execute the following command to start the frontend application:
+```bash  
+(.venv) <your_path_to_somerville> cd /src  
+```  
 
-```bash
-python src/frontend/main.py
-```
+Start the FastAPI application:  
 
-Alternatively, if the full path is required, use:
-```bash
-/path/to/.venv/bin/python /path/to/repo/src/frontend/main.py
+```bash  
+uvicorn main:app --host 0.0.0.0 --port 80 --reload  
+```  
+
+### 4. Start the Frontend  
+
+Execute the following command to start the frontend application:  
+
+```bash  
+python src/frontend/main.py  
+```  
+
+Alternatively, if the full path is required, use:  
+
+```bash  
+/path/to/.venv/bin/python /path/to/repo/src/frontend/main.py  
 ```
 
 ## Directory Structure
