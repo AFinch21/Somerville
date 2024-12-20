@@ -62,7 +62,13 @@ However, this evaluation has limitations: the majority of questions in the sampl
 
 ## **Answer Accuracy by Predicted Steps**
 
-**[This section seems incomplete in the original markdown.]**
+Similar to in the paper attached to this datset, *[CONVFINQA: Exploring the Chain of Numerical Reasoning in Conversational Finance Question Answering](https://arxiv.org/pdf/2210.03849)*, it is worth investigating how the number of steps required to execute impacts the accuracy of the solution.
+
+![Accuracy vs True Steps](plots/steps_vs_accuracy.png "True steps seems to not impact GPT4o")
+
+Somerville seems to not suffer from the similar drop off in performance with increase in steps when evaluated on a seperate dataset containing 40 rows, with 10 rows for operations with 2, 3, 4 and 5 steps.
+
+It is possible with the improvment in cognitive power that GPT-4o offers, the number of steps requires is not the limiting factor, rather whether the LLM can accurately extract entities.
 
 ---
 
