@@ -1,0 +1,1400 @@
+{
+    "responses": [
+        {
+            "question": "what was the percentage change in the gross unrecognized tax benefits between 2011 and 2012?",
+            "answer": 0.49963636363636366,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 2062.0,
+                    "arg_2": 1375.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 1375.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1995,
+            "ouput_tokens": 213,
+            "latency": 4.90437912940979,
+            "true_steps": 2,
+            "true_program": "subtract(2062, 1375), divide(#0, 1375)",
+            "true_answer": 0.49964
+        },
+        {
+            "question": "what was the percentage change in the gross unrecognized tax benefits between 2010 and 2011?",
+            "answer": 0.45811240721102864,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 1375.0,
+                    "arg_2": 943.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 943.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1975,
+            "ouput_tokens": 181,
+            "latency": 3.586256742477417,
+            "true_steps": 2,
+            "true_program": "subtract(1375, 943), divide(#0, 943)",
+            "true_answer": 0.45811
+        },
+        {
+            "question": "in 2013 what was the anticipated percentage growth in the stock performance for the peer group in 2014",
+            "answer": 0.23275862068965517,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 143.0,
+                    "arg_2": 116.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 27.0,
+                    "arg_2": 116.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1378,
+            "ouput_tokens": 189,
+            "latency": 3.8853859901428223,
+            "true_steps": 2,
+            "true_program": "subtract(143, 100), divide(#0, 100)",
+            "true_answer": 0.43
+        },
+        {
+            "question": "by what percentage did grant date fair value per share increase from 2013 to 2015?",
+            "answer": 0.5474707201594816,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 62.1,
+                    "arg_2": 40.13
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 40.13
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1895,
+            "ouput_tokens": 189,
+            "latency": 3.996980905532837,
+            "true_steps": 2,
+            "true_program": "subtract(62.10, 40.13), divide(#0, 40.13)",
+            "true_answer": 0.54747
+        },
+        {
+            "question": "what is the percentage change in total debt in 2015?",
+            "answer": 0.02776782515227517,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 5737.0,
+                    "arg_2": 5582.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 5582.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2105,
+            "ouput_tokens": 195,
+            "latency": 3.8462700843811035,
+            "true_steps": 2,
+            "true_program": "subtract(5737, 5582), divide(#0, 5582)",
+            "true_answer": 0.02777
+        },
+        {
+            "question": "what is the percentage change in the balance unrecognized tax benefits in 2014?",
+            "answer": 0.012854030501089325,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 4649.0,
+                    "arg_2": 4590.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 4590.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2113,
+            "ouput_tokens": 187,
+            "latency": 5.165626287460327,
+            "true_steps": 2,
+            "true_program": "subtract(4649, 4590), divide(#0, 4590)",
+            "true_answer": 0.01285
+        },
+        {
+            "question": "in 2009 what was the ratio of the 3 granted to the sum of the distributed and forfeited or canceled shares",
+            "answer": 1.2834332538118451,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 316839.0,
+                    "arg_2": 165211.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 618679.0,
+                    "arg_2": "step_1"
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1850,
+            "ouput_tokens": 191,
+            "latency": 3.481537103652954,
+            "true_steps": 2,
+            "true_program": "add(165211, 316839), divide(618679, #0)",
+            "true_answer": 1.28343
+        },
+        {
+            "question": "what is the total long-term debt in billions of dollars for citigroup , cgmhi , cfi and citigroup 2019s subsidiaries at december 31 , 2008?",
+            "answer": 359.6,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 192.3,
+                    "arg_2": 20.6
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": 37.4,
+                    "arg_2": 109.3
+                },
+                {
+                    "step": 3,
+                    "operation": "Add",
+                    "arg_1": "step_1",
+                    "arg_2": "step_2"
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 3483,
+            "ouput_tokens": 297,
+            "latency": 4.920109272003174,
+            "true_steps": 3,
+            "true_program": "add(192.3, 20.6), add(#0, 37.4), add(#1, 109.3)",
+            "true_answer": 359.6
+        },
+        {
+            "question": "what is the growth rate in weighted average fair values of the company 2019s options granted from 2003 to 2004?",
+            "answer": 0.11550632911392397,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 7.05,
+                    "arg_2": 6.32
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 6.32
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2252,
+            "ouput_tokens": 198,
+            "latency": 3.8501501083374023,
+            "true_steps": 2,
+            "true_program": "subtract(7.05, 6.32), divide(#0, 6.32)",
+            "true_answer": 0.11551
+        },
+        {
+            "question": "for the years ended december 312013 and 2012 what was the percentage change in the reinsurance receivables and premium receivables",
+            "answer": -0.06578988472712505,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 29905.0,
+                    "arg_2": 32011.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 32011.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2171,
+            "ouput_tokens": 204,
+            "latency": 3.7572579383850098,
+            "true_steps": 2,
+            "true_program": "subtract(29905, 32011), divide(#0, 32011)",
+            "true_answer": -0.06579
+        },
+        {
+            "question": "what is the percentage change in the gross accrued interest from 2006 to 2007?",
+            "answer": -0.27203647416413373,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 47.9,
+                    "arg_2": 65.8
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 65.8
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1961,
+            "ouput_tokens": 198,
+            "latency": 4.0410051345825195,
+            "true_steps": 2,
+            "true_program": "subtract(47.9, 65.8), divide(#0, 65.8)",
+            "true_answer": -0.27204
+        },
+        {
+            "question": "what is the growth rate in the segment of display from 2014 to 2015?",
+            "answer": -0.11467116357504216,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 525.0,
+                    "arg_2": 593.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": -68.0,
+                    "arg_2": 593.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1321,
+            "ouput_tokens": 196,
+            "latency": 2.810264825820923,
+            "true_steps": 2,
+            "true_program": "subtract(525, 593), divide(#0, 593)",
+            "true_answer": -0.11467
+        },
+        {
+            "question": "what was the percentage of the increase in the customer intangible asset from 2004 to 2005",
+            "answer": 0.9031342567612461,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 2606546.0,
+                    "arg_2": 1369607.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 1369607.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1978,
+            "ouput_tokens": 195,
+            "latency": 7.549687623977661,
+            "true_steps": 2,
+            "true_program": "subtract(2723872, 1502747), divide(#0, 1502747)",
+            "true_answer": 0.8126
+        },
+        {
+            "question": "what is the short-term debt as a percent of long-term debt , in 2019?",
+            "answer": 0.030550907851521345,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 58.2,
+                    "arg_2": 40.4
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": 2907.3,
+                    "arg_2": 320.1
+                },
+                {
+                    "step": 3,
+                    "operation": "Divide",
+                    "arg_1": 98.6,
+                    "arg_2": 3227.4
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 1002,
+            "ouput_tokens": 267,
+            "latency": 4.092700242996216,
+            "true_steps": 2,
+            "true_program": "add(2907.3, 320.1), divide(58.2, #0)",
+            "true_answer": 0.01803
+        },
+        {
+            "question": "what is the proportion of dollars at the beginning of both combined years to dollars at end of both combined years?",
+            "answer": 2.3249269401450374,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 4590.0,
+                    "arg_2": 16890.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": 4649.0,
+                    "arg_2": 4590.0
+                },
+                {
+                    "step": 3,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": "step_2"
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 2142,
+            "ouput_tokens": 274,
+            "latency": 4.7155938148498535,
+            "true_steps": 3,
+            "true_program": "add(4590, 16890), add(4649, 4590), divide(#0, #1)",
+            "true_answer": 2.32493
+        },
+        {
+            "question": "in 2010 what was the percent of the change in the post retirement benefit plan adjustments",
+            "answer": 0.050210182157870153,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": -8994.0,
+                    "arg_2": -8564.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": -8564.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1910,
+            "ouput_tokens": 196,
+            "latency": 3.6541218757629395,
+            "true_steps": 2,
+            "true_program": "subtract(8994, 8564), divide(#0, 8564)",
+            "true_answer": 0.05021
+        },
+        {
+            "question": "unrecognized tax benefits change by what percent between 2016 and 2017?",
+            "answer": 0.9183673469387755,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": -188.0,
+                    "arg_2": -98.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": -90.0,
+                    "arg_2": -98.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2242,
+            "ouput_tokens": 175,
+            "latency": 18.62228298187256,
+            "true_steps": 2,
+            "true_program": "subtract(188, 98), divide(#0, 98)",
+            "true_answer": 0.91837
+        },
+        {
+            "question": "what was the total percentage increase from 2007 to 2011 in the number of berths?",
+            "answer": 0.2599388379204893,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 412000.0,
+                    "arg_2": 327000.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 327000.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2471,
+            "ouput_tokens": 195,
+            "latency": 4.446249008178711,
+            "true_steps": 3,
+            "true_program": "subtract(155000, 100000), divide(#0, 100000), multiply(#1, const_100)",
+            "true_answer": 55.0
+        },
+        {
+            "question": "by what percentage will the space in one north endnew york new york decrease in 2019?",
+            "answer": 0.0625,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 240000.0,
+                    "arg_2": 225000.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 15000.0,
+                    "arg_2": 240000.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1808,
+            "ouput_tokens": 206,
+            "latency": 3.7739460468292236,
+            "true_steps": 2,
+            "true_program": "subtract(225000, 240000), divide(#0, 240000)",
+            "true_answer": -0.0625
+        },
+        {
+            "question": "what is the net income margin for 2018?",
+            "answer": 3.296941380382257e-05,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Divide",
+                    "arg_1": 10.5,
+                    "arg_2": 318477.0
+                }
+            ],
+            "predicted_steps": 1,
+            "input_tokens": 2706,
+            "ouput_tokens": 104,
+            "latency": 3.3240277767181396,
+            "true_steps": 2,
+            "true_program": "multiply(10.5, const_1000), divide(#0, 318477)",
+            "true_answer": 0.03297
+        },
+        {
+            "question": "as of dec 31 , 2015 , what percentage of total indebtedness was nonsecure?",
+            "answer": 0.5151515151515151,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 3300.0,
+                    "arg_2": 1600.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 3300.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2465,
+            "ouput_tokens": 186,
+            "latency": 3.891469955444336,
+            "true_steps": 2,
+            "true_program": "subtract(3.3, 1.6), divide(#0, 3.3)",
+            "true_answer": 0.51515
+        },
+        {
+            "question": "what is the roi of an investment in s&p500 index from 2011 to 2012?",
+            "answer": 0.16,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 116.0,
+                    "arg_2": 100.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 100.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1186,
+            "ouput_tokens": 175,
+            "latency": 3.274677038192749,
+            "true_steps": 2,
+            "true_program": "subtract(116.00, const_100), divide(#0, const_100)",
+            "true_answer": 0.16
+        },
+        {
+            "question": "what was the percentage change in cash from operations between 2009 and 2010?",
+            "answer": 0.326036866359447,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 1151.0,
+                    "arg_2": 868.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 868.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1914,
+            "ouput_tokens": 181,
+            "latency": 3.3053481578826904,
+            "true_steps": 2,
+            "true_program": "subtract(1151, 868), divide(#0, 868)",
+            "true_answer": 0.32604
+        },
+        {
+            "question": "considering the years 2015 and 2016 , what is the percentual increase observed in the total compensation expense under the stock plan?",
+            "answer": 0.7681159420289854,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 12.2,
+                    "arg_2": 6.9
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 6.9
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2567,
+            "ouput_tokens": 194,
+            "latency": 7.037519693374634,
+            "true_steps": 2,
+            "true_program": "divide(12.2, 6.9), subtract(#0, const_1)",
+            "true_answer": 0.76812
+        },
+        {
+            "question": "what was the percentage change in the annual operating cash flow between 2011 and 2012?",
+            "answer": 0.3551120466838978,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 50856.0,
+                    "arg_2": 37529.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 37529.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2091,
+            "ouput_tokens": 186,
+            "latency": 8.354266166687012,
+            "true_steps": 2,
+            "true_program": "subtract(50856, 37529), divide(#0, 37529)",
+            "true_answer": 0.35511
+        },
+        {
+            "question": "what was the percentage change in net sales from 2011 to 2012?",
+            "answer": 0.44581474193756987,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 156508.0,
+                    "arg_2": 108249.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 108249.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2142,
+            "ouput_tokens": 182,
+            "latency": 3.7266950607299805,
+            "true_steps": 2,
+            "true_program": "subtract(156508, 108249), divide(#0, 108249)",
+            "true_answer": 0.44581
+        },
+        {
+            "question": "what percent of the change in net revenue was due to rider revenue?",
+            "answer": 0.5042016806722674,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 498.8,
+                    "arg_2": 486.9
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 6.0,
+                    "arg_2": "step_1"
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1206,
+            "ouput_tokens": 170,
+            "latency": 3.5848820209503174,
+            "true_steps": 2,
+            "true_program": "subtract(498.8, 486.9), divide(const_6, #0)",
+            "true_answer": 0.5042
+        },
+        {
+            "question": "what percent of the net change in revenue between 2007 and 2008 was due to transmission revenue?",
+            "answer": 0.32686980609418365,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 1110.6,
+                    "arg_2": 1074.5
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 11.8,
+                    "arg_2": "step_1"
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1647,
+            "ouput_tokens": 169,
+            "latency": 3.1703250408172607,
+            "true_steps": 2,
+            "true_program": "subtract(1074.5, 1110.6), divide(11.8, #0)",
+            "true_answer": -0.32687
+        },
+        {
+            "question": "what is the percentage change in the gross amount of unrecognized tax benefit during 2007?",
+            "answer": -0.090016783996489,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 306870.0,
+                    "arg_2": 337226.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 337226.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1970,
+            "ouput_tokens": 222,
+            "latency": 3.691967010498047,
+            "true_steps": 2,
+            "true_program": "subtract(306870, 337226), divide(#0, 337226)",
+            "true_answer": -0.09002
+        },
+        {
+            "question": "what was the percentage change in share-based compensation expense between 2011 and 2012?",
+            "answer": -0.09090909090909091,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 55.0,
+                    "arg_2": 60.5
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 60.5
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2682,
+            "ouput_tokens": 183,
+            "latency": 7.2692530155181885,
+            "true_steps": 2,
+            "true_program": "subtract(38.4, 42.7), divide(#0, 42.7)",
+            "true_answer": -0.1007
+        },
+        {
+            "question": "what was the average net pension cost from 2017 to 2019 in millions",
+            "answer": 136.66666666666666,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 138.0,
+                    "arg_2": 137.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": 275.0,
+                    "arg_2": 135.0
+                },
+                {
+                    "step": 3,
+                    "operation": "Divide",
+                    "arg_1": 410.0,
+                    "arg_2": 3.0
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 1314,
+            "ouput_tokens": 247,
+            "latency": 10.54665231704712,
+            "true_steps": 3,
+            "true_program": "add(135, 137), add(#0, 138), divide(#1, const_3)",
+            "true_answer": 136.66667
+        },
+        {
+            "question": "what was the percentage cumulative total shareholder return for the four years ended 2014?",
+            "answer": 1.54,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 254.0,
+                    "arg_2": 100.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 154.0,
+                    "arg_2": 100.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1031,
+            "ouput_tokens": 194,
+            "latency": 4.504894971847534,
+            "true_steps": 2,
+            "true_program": "subtract(254, 100), divide(#0, 100)",
+            "true_answer": 1.54
+        },
+        {
+            "question": "the firm redeemed approximately $ 1.06 billion of these interests in hedge funds during the year ended december 2012 . what percentage was this of the remaining funds at 12/31/21?",
+            "answer": 0.334913112164297,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 3165.0,
+                    "arg_2": 2167.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": 2167.0,
+                    "arg_2": "step_1"
+                },
+                {
+                    "step": 3,
+                    "operation": "Divide",
+                    "arg_1": 1060.0,
+                    "arg_2": "step_2"
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 1864,
+            "ouput_tokens": 267,
+            "latency": 3.9232711791992188,
+            "true_steps": 2,
+            "true_program": "divide(2167, const_1000), divide(1.06, #0)",
+            "true_answer": 0.48916
+        },
+        {
+            "question": "what was the average backlog at year-end from 2013 to 2015?",
+            "answer": 5700.0,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 6300.0,
+                    "arg_2": 6000.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": 12300.0,
+                    "arg_2": 4800.0
+                },
+                {
+                    "step": 3,
+                    "operation": "Divide",
+                    "arg_1": 17100.0,
+                    "arg_2": 3.0
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 2047,
+            "ouput_tokens": 275,
+            "latency": 4.127536058425903,
+            "true_steps": 3,
+            "true_program": "add(4800, 6000), add(#0, 6300), divide(#1, const_3)",
+            "true_answer": 5700.0
+        },
+        {
+            "question": "what are the total assets repoert?",
+            "answer": 568597.0,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 7540.0,
+                    "arg_2": 5943.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": 13483.0,
+                    "arg_2": 188294.0
+                },
+                {
+                    "step": 3,
+                    "operation": "Add",
+                    "arg_1": 201777.0,
+                    "arg_2": 22278.0
+                },
+                {
+                    "step": 4,
+                    "operation": "Add",
+                    "arg_1": 224055.0,
+                    "arg_2": 264844.0
+                },
+                {
+                    "step": 5,
+                    "operation": "Subtract",
+                    "arg_1": 488899.0,
+                    "arg_2": -48448.0
+                },
+                {
+                    "step": 6,
+                    "operation": "Subtract",
+                    "arg_1": 537347.0,
+                    "arg_2": -31250.0
+                }
+            ],
+            "predicted_steps": 6,
+            "input_tokens": 1707,
+            "ouput_tokens": 437,
+            "latency": 5.288576126098633,
+            "true_steps": 3,
+            "true_program": "add(7540, 5943), add(#0, 188294), add(#1, 22278)",
+            "true_answer": 224055.0
+        },
+        {
+            "question": "what was the percentage cumulative total shareowners return for united parcel service inc . for the five years ended 12/31/2017?",
+            "answer": 0.9575,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 195.75,
+                    "arg_2": 100.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 100.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 971,
+            "ouput_tokens": 197,
+            "latency": 3.6583611965179443,
+            "true_steps": 2,
+            "true_program": "subtract(195.75, const_100), divide(#0, const_100)",
+            "true_answer": 0.9575
+        },
+        {
+            "question": "what was the percentage gain on the sale of starter brand business?",
+            "answer": 0.5233333333333333,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 60.0,
+                    "arg_2": 28.6
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 60.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1625,
+            "ouput_tokens": 182,
+            "latency": 3.070169687271118,
+            "true_steps": 2,
+            "true_program": "subtract(60.0, 28.6), divide(28.6, #0)",
+            "true_answer": 0.91083
+        },
+        {
+            "question": "what was the percentage change in total lease expense , including base rent on all leases and executory costs , such as insurance , taxes , and maintenance from 2003 to 2004?",
+            "answer": 0.04430379746835438,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 33.0,
+                    "arg_2": 31.6
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 31.6
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1258,
+            "ouput_tokens": 218,
+            "latency": 3.7894132137298584,
+            "true_steps": 2,
+            "true_program": "subtract(33.0, 31.6), divide(#0, 31.6)",
+            "true_answer": 0.0443
+        },
+        {
+            "question": "what is the percentual growth of the depreciation and amortization expenses during 2008 and 2009?",
+            "answer": 0.0440027772956084,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 108261.0,
+                    "arg_2": 103698.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 103698.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1608,
+            "ouput_tokens": 198,
+            "latency": 3.4779932498931885,
+            "true_steps": 2,
+            "true_program": "divide(108261, 103698), subtract(#0, const_1)",
+            "true_answer": 0.044
+        },
+        {
+            "question": "what is the average operating lease liability for 2014-2016?",
+            "answer": 649.6666666666666,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 672.0,
+                    "arg_2": 656.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": "step_1",
+                    "arg_2": 621.0
+                },
+                {
+                    "step": 3,
+                    "operation": "Divide",
+                    "arg_1": "step_2",
+                    "arg_2": 3.0
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 1452,
+            "ouput_tokens": 267,
+            "latency": 5.058791160583496,
+            "true_steps": 3,
+            "true_program": "add(672, 656), add(#0, 621), divide(#1, const_3)",
+            "true_answer": 649.66667
+        },
+        {
+            "question": "what was the average yearly decline in international traffic in 2008 and in 2009?",
+            "answer": 17.5,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 11.0,
+                    "arg_2": 24.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 2.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1925,
+            "ouput_tokens": 171,
+            "latency": 2.7275211811065674,
+            "true_steps": 2,
+            "true_program": "add(11%, 24%), divide(#0, const_2)",
+            "true_answer": 0.175
+        },
+        {
+            "question": "what was the percentage change in the unrecognized tax benefits from 2012 to 2013?",
+            "answer": 0.036585365853658534,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 85.0,
+                    "arg_2": 82.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 3.0,
+                    "arg_2": 82.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2871,
+            "ouput_tokens": 197,
+            "latency": 3.6872832775115967,
+            "true_steps": 2,
+            "true_program": "subtract(85, 82), divide(#0, 82)",
+            "true_answer": 0.03659
+        },
+        {
+            "question": "what percentage increase in asian cruise guests occurred between 2012 and 2016?",
+            "answer": 1.4667571234735415,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 3636.0,
+                    "arg_2": 1474.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 1474.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2107,
+            "ouput_tokens": 207,
+            "latency": 4.5804078578948975,
+            "true_steps": 3,
+            "true_program": "subtract(3636, 1474), divide(#0, 1474), multiply(#1, const_100)",
+            "true_answer": 146.67571
+        },
+        {
+            "question": "what percent of system energy's receivable from the money pool was replaced by a note receivable from entergy new orleans?",
+            "answer": 2.1018215787015415,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 53620.0,
+                    "arg_2": 42915.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": 22500.0,
+                    "arg_2": "step_1"
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1479,
+            "ouput_tokens": 180,
+            "latency": 3.505840301513672,
+            "true_steps": 2,
+            "true_program": "multiply(22.5, const_1000), divide(#0, 53620)",
+            "true_answer": 0.41962
+        },
+        {
+            "question": "what is the percent change in asset allocation from 12/31/2011 to 12/31/2012?",
+            "answer": 0.11178976258656112,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 140160.0,
+                    "arg_2": 126067.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 126067.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2913,
+            "ouput_tokens": 197,
+            "latency": 3.486132860183716,
+            "true_steps": 2,
+            "true_program": "subtract(140160, 126067), divide(#0, 126067)",
+            "true_answer": 0.11179
+        },
+        {
+            "question": "what portion of the total expected payment for benefits is related to pension benefits?",
+            "answer": 0.8342749529190208,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 125.0,
+                    "arg_2": 132.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": "step_1",
+                    "arg_2": 143.0
+                },
+                {
+                    "step": 3,
+                    "operation": "Add",
+                    "arg_1": "step_2",
+                    "arg_2": 154.0
+                },
+                {
+                    "step": 4,
+                    "operation": "Add",
+                    "arg_1": "step_3",
+                    "arg_2": 166.0
+                },
+                {
+                    "step": 5,
+                    "operation": "Add",
+                    "arg_1": "step_4",
+                    "arg_2": 1052.0
+                },
+                {
+                    "step": 6,
+                    "operation": "Add",
+                    "arg_1": 30.0,
+                    "arg_2": 31.0
+                },
+                {
+                    "step": 7,
+                    "operation": "Add",
+                    "arg_1": "step_6",
+                    "arg_2": 31.0
+                },
+                {
+                    "step": 8,
+                    "operation": "Add",
+                    "arg_1": "step_7",
+                    "arg_2": 33.0
+                },
+                {
+                    "step": 9,
+                    "operation": "Add",
+                    "arg_1": "step_8",
+                    "arg_2": 34.0
+                },
+                {
+                    "step": 10,
+                    "operation": "Add",
+                    "arg_1": "step_9",
+                    "arg_2": 193.0
+                },
+                {
+                    "step": 11,
+                    "operation": "Add",
+                    "arg_1": "step_5",
+                    "arg_2": "step_10"
+                },
+                {
+                    "step": 12,
+                    "operation": "Divide",
+                    "arg_1": "step_5",
+                    "arg_2": "step_11"
+                }
+            ],
+            "predicted_steps": 12,
+            "input_tokens": 2555,
+            "ouput_tokens": 1007,
+            "latency": 11.4690420627594,
+            "true_steps": 2,
+            "true_program": "add(1772, 352), divide(1772, #0)",
+            "true_answer": 0.83427
+        },
+        {
+            "question": "what was the cumulative rent expense from 2011 to 2013",
+            "answer": 651.0,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 205.0,
+                    "arg_2": 231.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": "step_1",
+                    "arg_2": 215.0
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 2586,
+            "ouput_tokens": 165,
+            "latency": 3.2712769508361816,
+            "true_steps": 2,
+            "true_program": "add(215, 231), add(205, #0)",
+            "true_answer": 651.0
+        },
+        {
+            "question": "in millions , what is the average operating expenses from 2008-2010?",
+            "answer": 12216.0,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Add",
+                    "arg_1": 11984.0,
+                    "arg_2": 10764.0
+                },
+                {
+                    "step": 2,
+                    "operation": "Add",
+                    "arg_1": "step_1",
+                    "arg_2": 13900.0
+                },
+                {
+                    "step": 3,
+                    "operation": "Divide",
+                    "arg_1": "step_2",
+                    "arg_2": 3.0
+                }
+            ],
+            "predicted_steps": 3,
+            "input_tokens": 2401,
+            "ouput_tokens": 272,
+            "latency": 19.68800377845764,
+            "true_steps": 3,
+            "true_program": "add(11984, 10764), add(#0, 13900), divide(#1, const_3)",
+            "true_answer": 12216.0
+        },
+        {
+            "question": "what is the growth rate in the fair value of the total restricted stock units outstanding in 2015?",
+            "answer": -0.07327769633132994,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Multiply",
+                    "arg_1": 3188.0,
+                    "arg_2": 43.46
+                },
+                {
+                    "step": 2,
+                    "operation": "Multiply",
+                    "arg_1": 2698.0,
+                    "arg_2": 47.59
+                },
+                {
+                    "step": 3,
+                    "operation": "Subtract",
+                    "arg_1": "step_2",
+                    "arg_2": "step_1"
+                },
+                {
+                    "step": 4,
+                    "operation": "Divide",
+                    "arg_1": "step_3",
+                    "arg_2": "step_1"
+                }
+            ],
+            "predicted_steps": 4,
+            "input_tokens": 2253,
+            "ouput_tokens": 368,
+            "latency": 7.9690022468566895,
+            "true_steps": 4,
+            "true_program": "multiply(3188, 43.46), multiply(2698, 47.59), subtract(#1, #0), divide(#2, #0)",
+            "true_answer": -0.07328
+        },
+        {
+            "question": "what was the percentage change in the allowance for doubtful accounts in 2016",
+            "answer": -0.05781584582441119,
+            "predicted_operations": [
+                {
+                    "step": 1,
+                    "operation": "Subtract",
+                    "arg_1": 44.0,
+                    "arg_2": 46.7
+                },
+                {
+                    "step": 2,
+                    "operation": "Divide",
+                    "arg_1": "step_1",
+                    "arg_2": 46.7
+                }
+            ],
+            "predicted_steps": 2,
+            "input_tokens": 1799,
+            "ouput_tokens": 197,
+            "latency": 3.2673659324645996,
+            "true_steps": 2,
+            "true_program": "subtract(44.0, 46.7), divide(#0, 46.7)",
+            "true_answer": -0.05782
+        }
+    ],
+    "num_eval_questions": 50,
+    "num_answered_questions": 50,
+    "num_correct_answers": 36,
+    "answer_accuracy": 72.0,
+    "step_accuracy": 86.0,
+    "average_latency": 5.136555433273315,
+    "max_latency": 19.68800377845764,
+    "min_latency": 0.0
+}
