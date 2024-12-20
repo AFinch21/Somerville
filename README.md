@@ -154,4 +154,4 @@ This project is open-source and is licensed under the MIT License.
 
 ## Author
 
-[Your Name]
+Andrew Finch

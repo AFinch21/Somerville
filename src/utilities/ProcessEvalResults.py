@@ -7,6 +7,13 @@ def process_evaluation_run(results: list) -> EvaluationSummary:
     
     correct_step_percentage = calculate_step_accuracy_percentage(results)
     
+    av_latency = calculate_average_latency(results)
+    
+    max_latency = calculate_max_latency(results)
+    
+    min_latency = calculate_min_latency(results)
+
+    
     return EvaluationSummary(
         responses=results,
         num_eval_questions=len(results),
@@ -14,9 +21,9 @@ def process_evaluation_run(results: list) -> EvaluationSummary:
         num_correct_answers=correct_answers,
         answer_accuracy=correct_answer_percentage,
         step_accuracy=correct_step_percentage,
-        average_latency=100.0,
-        max_latency=100.0,
-        min_latency=100.0
+        average_latency=av_latency,
+        max_latency=max_latency,
+        min_latency=min_latency
     )
     
 def calculate_correct_answer_percentage(objects):
@@ -50,3 +57,40 @@ def calculate_step_accuracy_percentage(objects):
     step_accuracy_percentage = (float(correct_steps_count) / float(total_answers)) * 100
     
     return step_accuracy_percentage
+
+def calculate_average_latency(objects):
+    # Check for edge case where objects might be empty
+    if not objects:
+        return 0  # Return 0 if there are no objects to calculate latency
+
+    total_answers = len(objects)  # Total number of answers
+    total_latency = 0
+
+    for obj in objects:
+        total_latency += obj.latency  # Accumulate latency from each object
+
+    # Calculate the average latency
+    average_latency = total_latency / total_answers
+    return average_latency
+
+def calculate_max_latency(objects):
+    # Initialize max_latency to a very small value
+    max_latency = 0.0
+    
+    # Iterate through the objects to find the maximum latency
+    for obj in objects:
+        if obj.latency > max_latency:
+            max_latency = obj.latency
+    
+    return max_latency
+
+def calculate_min_latency(objects):
+    # Initialize max_latency to a very small value
+    min_latency = 0.0
+    
+    # Iterate through the objects to find the maximum latency
+    for obj in objects:
+        if obj.latency < min_latency:
+            min_latency = obj.latency
+    
+    return min_latency

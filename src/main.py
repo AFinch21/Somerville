@@ -11,6 +11,7 @@ from utilities.ProcessEvalResults import process_evaluation_run
 from utilities.AgentWorkflow import execute_agent_workflow
 from utilities.AppStartup import initialize_database, load_agents
 from logger.Logger import get_logger
+import ast
 
 app = FastAPI()
 
@@ -90,21 +91,34 @@ async def get_evaluation(eval_request: EvaluationRequest):
             max_retries=eval_request.max_retries,
             status="Success"
         )
-
-        result = execute_agent_workflow(db, agent_pod, query_request)
-        
-        evaluation_response = EvaluationResponse(
-            question=result.question,
-            answer=result.answer,
-            predicted_operations=result.operations,
-            predicted_steps=len(result.operations),
-            input_tokens=100,
-            ouput_tokens=100,
-            latency=100.0,
-            true_steps=2,
-            true_program=eval_question.program,
-            true_answer=eval_question.exe_answer
-        )
+        try:
+            result = execute_agent_workflow(db, agent_pod, query_request, json_file_path, use_database)
+            evaluation_response = EvaluationResponse(
+                question=result.question,
+                answer=result.answer,
+                predicted_operations=result.operations,
+                predicted_steps=len(result.operations),
+                input_tokens=result.input_tokens,
+                ouput_tokens=result.ouput_tokens,
+                latency=result.latency,
+                true_steps=len(ast.literal_eval(eval_question.steps)),
+                true_program=eval_question.program,
+                true_answer=eval_question.exe_answer
+            )
+        except Exception as error:
+            logger.error(f"Could not formulate response. Error: {error}")
+            evaluation_response = EvaluationResponse(
+                question=result.question,
+                answer=r"Error in Agent workflow",
+                predicted_operations=[],
+                predicted_steps=0,
+                input_tokens=100,
+                ouput_tokens=100,
+                latency=result.latency,
+                true_steps=len(ast.literal_eval(eval_question.steps)),
+                true_program=eval_question.program,
+                true_answer=eval_question.exe_answer
+            )
 
         responses.append(evaluation_response)
     
