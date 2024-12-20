@@ -175,8 +175,6 @@ async def on_go_button_click(question):
     
     question = question.value  # Get the value from the input field
     
-    print(question)
-    
     
     pre_text = [record['pre_text'] for record in question_dta if record.get('question') == question]
     table = [record['table_ori'] for record in question_dta if record.get('question') == question]
@@ -192,7 +190,6 @@ async def on_go_button_click(question):
     }
 
     response = await get_response(question)  # Process the input value
-    print(operation_values_true)
     # temp_ops = [{'step': 1, 'operation': 'Add', 'arg_1': 0.0, 'arg_2': 0.0}, {'step': 2, 'operation': 'Add', 'arg_1': 0.0, 'arg_2': 0.0}, {'step': 3, 'operation': 'Add', 'arg_1': 0.0, 'arg_2': 0.0}]
     operation_values = response['operations']  # Update the global operations list dynamically
     operation_arguments = response['operation_arguments']

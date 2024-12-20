@@ -10,6 +10,7 @@ class QueryRequest(BaseModel):
     
 class EvaluationRequest(BaseModel):
     n_questions: int
+    min_steps: int
     max_retries: int
     status: str
     
@@ -86,6 +87,7 @@ class ConvFinQADataSchema(BaseModel):
     table_ori: Optional[str] = None
     question: Optional[str] = None
     steps: Optional[str] = None
+    steps: Optional[int] = None
     program: Optional[str] = None
     answer: Optional[str] = None
     exe_answer: Optional[float] = None
@@ -114,6 +116,7 @@ class ConvFinQADataEval(BaseModel):
     table_ori: Optional[str] = None
     question: Optional[str] = None
     steps: Optional[str] = None
+    steps_num: Optional[int] = None
     program: Optional[str] = None
     exe_answer: float
     

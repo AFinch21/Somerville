@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, relationship, Mapped, mapped_column
-from sqlalchemy import ForeignKey, String, Boolean, Column, Float
+from sqlalchemy import ForeignKey, String, Boolean, Column, Float, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from logger.Logger import get_logger
 from typing import List
@@ -65,6 +65,7 @@ class ConvFinQAData(Base):
     table_ori = Column(String)
     question = Column(String)
     steps = Column(String)
+    steps_num = Column(Integer)
     program = Column(String)
     answer = Column(String)
     exe_answer = Column(Float)

@@ -81,7 +81,7 @@ async def get_evaluation(eval_request: EvaluationRequest):
     Endpoint to get an evaluation.
     """
     
-    evaluation_set = get_evaluation_data(agent_pod, eval_request.n_questions, json_file_path, use_database)
+    evaluation_set = get_evaluation_data(db, eval_request.n_questions, json_file_path, use_database, eval_request.min_steps)
     
     responses = []
     

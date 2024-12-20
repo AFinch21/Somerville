@@ -29,13 +29,4 @@ def entity_extraction_message(operation_steps_json: str, pre_text: str, post_tex
     {post_text}
     '''
     
-    # entity_extractor_message = f'''
-    # Here are the operation steps:
-    # {operation_steps_json}
-
-    # Here is the table containing the numerical data:
-    # {table}
-
-    # '''
-    
     return entity_extractor_message

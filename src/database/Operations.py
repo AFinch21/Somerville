@@ -46,7 +46,6 @@ def get_question_data(engine, question, file_path, database=True):
                         table_ori=str(data[item]["table_ori"]),
                         question=data[item]["question"],
                     )
-                    print(question_data.id)
                     return question_data
     
     return None 
@@ -70,8 +69,9 @@ def get_all_question_data(engine, file_path, database=True):
                     table_ori=row[6],
                     question=row[7],
                     steps=row[8],
-                    program=row[9],
-                    exe_answer=row[11],
+                    steps_num=row[9],
+                    program=row[10],
+                    exe_answer=row[12],
                 )
                 questions.append(question)
     else:
@@ -90,6 +90,7 @@ def get_all_question_data(engine, file_path, database=True):
                     table_ori=str(data[item]["table_ori"]),
                     question=str(data[item]["question"]),
                     steps=str(data[item]["steps"]),
+                    steps_num=str(data[item]["step_num"]),
                     program=str(data[item]["program"]),
                     exe_answer=str(data[item]["exe_answer"]),
                 )
@@ -97,16 +98,19 @@ def get_all_question_data(engine, file_path, database=True):
     
     return questions
 
-def get_evaluation_data(engine, n, file_path, database=True):
+def get_evaluation_data(engine, n, file_path, database=True, minimum_steps=0):
     questions = []
-
     if database:
-        # Use the database logic
-        stmt = select(ConvFinQAData).order_by(func.random()).limit(n)
-        
+        # Use the database logic and filter by minimum_steps
+        stmt = (
+            select(ConvFinQAData)
+            .where(ConvFinQAData.steps_num >= minimum_steps)  # Ensure steps_num meets the condition
+            .order_by(func.random())  # Randomize results
+            .limit(n)  # Limit the number of records
+        )
+
         with engine.connect() as conn:
             result = conn.execute(stmt)
-            
             for row in result:
                 question = ConvFinQADataEval(
                     id=row[0],
@@ -118,35 +122,50 @@ def get_evaluation_data(engine, n, file_path, database=True):
                     table_ori=row[6],
                     question=row[7],
                     steps=row[8],
-                    program=row[9],
-                    exe_answer=row[11],
+                    steps_num=row[9],
+                    program=row[10],
+                    exe_answer=row[12],
                 )
                 questions.append(question)
-    else:
+
+    else:  # When reading from a file
         with open(file_path, "r") as f:
             data = json.load(f)
             # Randomly select `n` items from the loaded data
             if isinstance(data, dict):
-                sampled_keys = random.sample(list(data.keys()), n)  
+                sampled_keys = random.sample(list(data.keys()), len(data))
                 sampled_items = [data[key] for key in sampled_keys]
             else:
-                sampled_items = random.sample(data, n) 
-                
-            for item in sampled_items:
+                sampled_items = data
+
+            # Filter the sampled items for minimum_steps and then randomize n
+            filtered_items = [
+                item for item in sampled_items if int(item["step_num"]) >= minimum_steps
+            ]
+            if len(filtered_items) < n:
+                raise ValueError(
+                    f"Not enough items in the file meet the 'minimum_steps'={minimum_steps} condition."
+                )
+            selected_items = random.sample(filtered_items, n)
+            
+            # Map the filtered and selected items to ConvFinQADataEval
+            for item in selected_items:
                 question = ConvFinQADataEval(
                     id=str(item["id"]),
                     company=str(item["company"]),
                     year=str(item["year"]),
                     filename=str(item["filename"]),
-                    pre_text=str(item["pre_text"]),  
+                    pre_text=str(item["pre_text"]),
                     post_text=str(item["post_text"]),
                     table_ori=str(item["table_ori"]),
                     question=str(item["question"]),
                     steps=str(item["steps"]),
+                    steps_num=str(item["step_num"]),
                     program=str(item["program"]),
                     exe_answer=str(item["exe_answer"]),
                 )
                 questions.append(question)
+
     return questions
 
 
@@ -238,6 +257,7 @@ def upload_input_data(engine, json_file_path):
                     table_ori=str(records[row]['table_ori']),
                     question=str(records[row]['question']),
                     steps=str(records[row]['steps']),
+                    steps_num=str(records[row]["step_num"]),
                     program=str(records[row]['program']),
                     answer=str(records[row]['answer']),
                     exe_answer=str(records[row]['exe_answer'])
