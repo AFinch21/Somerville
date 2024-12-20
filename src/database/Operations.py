@@ -333,3 +333,15 @@ def upload_agent_data(engine, json_file_path):
         session.rollback()
     finally:
         session.close()
+        
+def add_response(engine, response: ResponseModel) -> None:
+
+    try:
+        engine.add(response)
+        engine.commit()
+        print("ResponseModel added successfully!")
+    except Exception as e:
+        engine.rollback()  # Rollback in case of error
+        print(f"Failed to add ResponseModel: {e}")
+    finally:
+        engine.close()
