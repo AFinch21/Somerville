@@ -206,16 +206,29 @@ def index():
     # Banner with navigation buttons
     with ui.header().classes('justify-between items-center'):
         with ui.row():
+            ui.space()
             ui.markdown("### Somerville.ai")
-        with ui.row():
-            ui.button("Home", on_click=lambda: print("Home clicked"))
-            ui.button("Evaluation", on_click=lambda: print("Evaluation clicked"))
-            ui.button("About", on_click=lambda: print("About clicked"))
+            ui.space()
+
+
 
     with ui.column().classes('w-full items-center'):
         with ui.row():
+            ui.space()
             label = "Welcome to Somerville - an LLM-powered financial arithmetic solution. "
             ui.label(label).style('font-size: 22px; color: #008B8B')
+            ui.space()
+        with ui.row():
+            ui.space()
+            tagline = "Somerville executes a multi-stage process - create a plan, extract entities, execute the operation chain, then evaluate against the true answer"
+            ui.label(tagline).style('font-size: 16px; color: #008B8B')
+            ui.space()
+        with ui.row():
+            ui.space()
+            tagline = "Choose a company and question from the options below - then click the 'Plan', 'Extract', 'Calculate', and 'Evaluate' tabs to inspect the LLM's output"
+            ui.label(tagline).style('font-size: 16px; color: #008B8B')
+            ui.space()
+
             
         def update_questions():
             question.clear()  # Clear the current options in the question dropdown
@@ -251,19 +264,15 @@ def index():
                 
                 with ui.tab_panels(tabs, value=plan).classes('w-full'):
                     with ui.tab_panel(plan):
-                        ui.label('First Tab - Dynamic Counters')
                         dynamic_step_display()  # Display counters dynamically
 
                     with ui.tab_panel(extract):
-                        ui.label('Second tab')
                         dynamic_context_display()
 
                     with ui.tab_panel(calculate):
-                        ui.label('Third tab')
                         dynamic_calculation_display()
 
                     with ui.tab_panel(evaluate):
-                        ui.label('Fourth tab')
                         dynamic_comparison_display()
         
     with ui.row().style('align-items: center'):

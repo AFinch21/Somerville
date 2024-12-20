@@ -19,7 +19,9 @@ A number of assumptions should be clarified for this evaluation:
 
     `src/data/ConvFincQA_data.json`  
 
+- Full test results can be found here:
 
+    `ConvFinQA_test_subset_50_results.json`    
 ---
 
 ## **Overall Accuracy**

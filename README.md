@@ -1,6 +1,65 @@
 # Somerville
 A repo for my solution to the ConvFinQA challenge. Named after Mary Somerville - scottish mathematician.
 
+## How to start Somerville
+
+### 1. Create a Virtual Environment
+
+```bash
+# Assuming Windows machine
+python -m venv venv
+```
+
+- **For Unix/macOS:**
+  ```bash
+  source venv/bin/activate
+  ```
+
+- **For Windows:**
+  ```bash
+  .\venv\Scripts\activate
+  ```
+```bash
+# Install dependencies from requirements.txt
+pip install -r requirements.txt
+```
+
+### 2. Add .env file
+For review and testing, it is recomended to set USE_DATABASE to 'no'.
+
+```bash
+OPENAI_API_KEY = <KEY>
+# If you want to use the datamodel, please create an empty database called 'somerville'
+DATABASE_URL = "postgresql://<username>:<pasword>@localhost:5432/somerville"
+# If you want to just use the JSON files in the application, set USE_DATABASE to 'no'
+USE_DATABASE = 'no'
+```
+
+### 3. Start up backend
+Navigate to the /src/ file:
+
+```bash
+(.venv) <your_path_to_somerville> cd /src
+```
+Start the fastAPI application:
+
+```bash
+uvicorn main:app --host 0.0.0.0 --port 80 --reload
+```
+
+### 3. Start up frontend
+
+Execute the following command to start the frontend application:
+
+```bash
+python src/frontend/main.py
+```
+
+Alternatively, if the full path is required, use:
+```bash
+/path/to/.venv/bin/python /path/to/repo/src/frontend/main.py
+```
+
 ## Directory Structure
 
 **Core Directories:**
