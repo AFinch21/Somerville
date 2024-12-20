@@ -128,5 +128,5 @@ def execute_agent_workflow(db, agent_pod: list, query_request: QueryRequest, loc
         status="Success"
     )
     logger.info("Succesfully executed workflow")
-    logger.info(f"Answer predicted{query_response.answer}")
+    logger.info(f"Answer predicted: {query_response.answer}")
     return query_response
